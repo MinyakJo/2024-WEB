@@ -14,6 +14,7 @@ type propsType = {
     fontSize?: string
     fontWeight?: string
     lineHeight?: string
+    letter?: string
 }
 
 const P = styled.p< propsType >`
@@ -28,7 +29,7 @@ const P = styled.p< propsType >`
         return props.color ? CommonStyle.setColor(props.color) : CommonStyle.setColor("black")
     }};
     font-family: ${props => {
-        return props.fontFamily ? props.fontFamily : "regular"
+        return props.fontFamily ? props.fontFamily : "medium"
     }};
     font-size: ${props => {
         return props.fontSize ? CommonStyle.setFontSize(props.fontSize) : CommonStyle.setFontSize("medium")
@@ -38,6 +39,9 @@ const P = styled.p< propsType >`
     }};
     line-height: ${props => {
         return props.lineHeight ? props.lineHeight : null
+    }};
+    letter-spacing: ${props => {
+        return props.letter ? props.letter : null
     }};
     user-select: none;
 `

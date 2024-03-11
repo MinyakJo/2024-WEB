@@ -12,6 +12,7 @@ type propsType = {
     color?: string
     marginRight?: string
     marginLeft?: string
+    cursor?: string
 }
 
 const Accent = styled.span< propsType >`
@@ -24,6 +25,9 @@ const Accent = styled.span< propsType >`
     }}; 
     margin-left: ${props => {
         return props.marginLeft ? props.marginLeft : null
+    }};
+    cursor: ${props => {
+        return props.cursor ? props.cursor : "default"
     }};
     user-select: none;
 `

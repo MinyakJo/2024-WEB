@@ -10,13 +10,14 @@ import CommonStyle from "components/style"
 
 type propsType = {
     height?: string
-    family?: string
+    fontFamily?: string
     fontSize?: string
-    weight?: string
+    fontWeight?: string
     backgroundColor?: string
     borderColor?: string
     radius?: string
     placeholderColor?: string
+    letter?: string
 }
 
 const Input = styled.input< propsType >`
@@ -30,17 +31,21 @@ const Input = styled.input< propsType >`
     height: ${props => {
         return props.height ? props.height : "fit-content"
     }};
+
     color: ${props => {
         return props.color ? CommonStyle.setColor(props.color) : "black"
     }};
     font-family: ${props => {
-        return props.family ? props.family : "regular"
+        return props.fontFamily ? props.fontFamily : "medium"
     }};
     font-size: ${props => {
         return props.fontSize ? CommonStyle.setFontSize(props.fontSize) : CommonStyle.setFontSize("medium")
     }};
     font-weight: ${props => {
-        return props.weight ? props.weight : "400"
+        return props.fontWeight ? props.fontWeight : "400"
+    }};
+    letter-spacing: ${props => {
+        return props.letter ? props.letter : null
     }};
 
     background-color: ${props => {

@@ -11,12 +11,15 @@ import CommonStyle from "components/style"
 type propsType = {
     flex?: string
     color?: string
-    family?: string
-    size?: string
-    weight?: string
+    fontFamily?: string
+    fontSize?: string
+    fontWeight?: string
     backgroundColor?: string
     borderColor?: string
     radius?: string
+    letter?: string
+    lineHeight?: string
+    cursor?: string
 }
 
 const Button = styled.button< propsType >`
@@ -26,7 +29,6 @@ const Button = styled.button< propsType >`
     margin: 0;
     padding: 0;
     border: none;
-    cursor: pointer;
     outline: none;
 
     ${props => {
@@ -37,13 +39,19 @@ const Button = styled.button< propsType >`
         return props.color ? CommonStyle.setColor(props.color) : CommonStyle.setColor("black")
     }};
     font-family: ${props => {
-        return props.family ? props.family : "regular"
+        return props.fontFamily ? props.fontFamily : "medium"
     }};
     font-size: ${props => {
-        return props.size ? CommonStyle.setFontSize(props.size) : CommonStyle.setFontSize("medium")
+        return props.fontSize ? CommonStyle.setFontSize(props.fontSize) : CommonStyle.setFontSize("medium")
     }};
     font-weight: ${props => {
-        return props.weight ? props.weight : "400"
+        return props.fontWeight ? props.fontWeight : "400"
+    }};
+    letter-spacing: ${props => {
+        return props.letter ? props.letter : null
+    }};
+    line-height: ${props => {
+        return props.lineHeight ? props.lineHeight : null
     }};
 
     background-color: ${props => {
@@ -54,6 +62,11 @@ const Button = styled.button< propsType >`
     }};
     border-radius: ${props => {
         return props.radius ? props.radius : null 
+    }};
+
+    
+    cursor: ${props => {
+        return props.cursor ? props.cursor : "pointer" 
     }};
     user-select: none;
 `

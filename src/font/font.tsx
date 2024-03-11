@@ -3,21 +3,25 @@
 import { createGlobalStyle } from "styled-components";
 // ===== Files =====
 
-import NotoSans from "font/NotoSansKR-Regular.otf"
-import BlackHanSans from "font/BlackHanSans-Regular.ttf"
+import SFDisplayRegular from "font/SF_Pro/SF-Pro-Display-Regular.otf"
+import SFDisplayMedium from "font/SF_Pro/SF-Pro-Display-Medium.otf"
+import SFDisplaySemiBold from "font/SF_Pro/SF-Pro-Display-Semibold.otf"
 
 // ===== Style =====
 
 const GlobalFonts = createGlobalStyle`
 
     @font-face {
-        font-family: "regular";
-        src: url(${NotoSans});
+        font-family: "medium";
+        src: url(${SFDisplayMedium});
     }
-
     @font-face {
-        font-family: "bold";
-        src: url(${BlackHanSans});
+        font-family: "regular";
+        src: url(${SFDisplayRegular});
+    }
+    @font-face {
+        font-family: "semiBold";
+        src: url(${SFDisplaySemiBold});
     }
 `
 

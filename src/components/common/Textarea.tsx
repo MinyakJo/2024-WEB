@@ -10,9 +10,9 @@ import CommonStyle from "components/style"
 
 type propsType = {
     height?: string
-    family?: string
+    fontFamily?: string
     fontSize?: string
-    weight?: string
+    fontWeight?: string
     backgroundColor?: string
     borderColor?: string
     radius?: string
@@ -21,6 +21,7 @@ type propsType = {
     scrollWidth?: string
     scrollBackgroundColor?: string
     scrollRadius?: string
+    letter?: string
 }
 
 const Textarea = styled.textarea< propsType >`
@@ -39,14 +40,18 @@ const Textarea = styled.textarea< propsType >`
         return props.color ? CommonStyle.setColor(props.color) : "black"
     }};
     font-family: ${props => {
-        return props.family ? props.family : "regular"
+        return props.fontFamily ? props.fontFamily : "medium"
     }};
     font-size: ${props => {
         return props.fontSize ? CommonStyle.setFontSize(props.fontSize) : CommonStyle.setFontSize("medium")
     }};
     font-weight: ${props => {
-        return props.weight ? props.weight : "400"
+        return props.fontWeight ? props.fontWeight : "400"
     }};
+    letter-spacing: ${props => {
+        return props.letter ? props.letter : null
+    }};
+
     padding-right: ${props => {
         return props.paddingRight ? props.paddingRight : null
     }};
