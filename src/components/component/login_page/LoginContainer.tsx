@@ -37,7 +37,7 @@ const LoginContainer = () => {
     return (
         <MainContainer flex="column_top" maxWidth="416px" minWidth="416px">
             {/* 로그인 메인 */}
-            <Div flex="column_center" padding="70px 48px" paddingBottom="40px" borderColor="200" marginBottom="10px">
+            <Div flex="column_center" padding="70px 48px" paddingBottom="40px" borderColor="200" marginBottom="10px" backgroundColor="white">
 
                 {/* 로고 */}
                 <Div width="217px" height="80px" marginBottom="57px">
@@ -54,7 +54,7 @@ const LoginContainer = () => {
                 <LoginAlert/>
             </Div>
             {/* 가입하기 버튼 */}
-            <Div padding="31px 0px" borderColor="200">
+            <Div padding="31px 0px" borderColor="200" backgroundColor="white">
                 <Div flex="row_center">
                     <P color="500" fontSize="medium" fontWeight="600" fontFamily="semiBold" lineHeight="24px">
                         { "계정이 없으신가요? " }

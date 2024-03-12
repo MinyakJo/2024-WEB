@@ -7,7 +7,7 @@ import { pwIsHideState, loginCheckState } from "recoil/loginAtom"
 //component
 import Div from "components/common/Div"
 import Img from "components/common/Img"
-import LoginContainer from "components/component/LoginPage/LoginContainer"
+import LoginContainer from "components/component/login_page/LoginContainer"
 
 //img, icon
 import phone from "../../svg/login_phone.svg"
@@ -51,7 +51,7 @@ const LoginPage = () => {
 
         switch( id ){
             case "sign-up": //LoginContainer 에 있는 가입하기 버튼
-                navigate( `${ id }` )
+                navigate( `/${ id }` )
                 return
             case "hidePw":
                 setPwIsHide( false )
@@ -66,7 +66,7 @@ const LoginPage = () => {
 
     //useEffect
     useEffect(() => {
-        //이 페이지를 나갈시에 초기화
+        //이 페이지를 나갈시에 recoil state 초기화
         return () => {
             resetPwIsHide()
             resetLoginCheck()

@@ -8,6 +8,7 @@ import { Route, Routes } from "react-router-dom"
 
 import Div from "./components/common/Div"
 import LoginPage from "./components/page/LoginPage"
+import SignUpPage from "components/page/SignUpPage"
 
 // ===== Code =====
 
@@ -19,6 +20,7 @@ const App = () => {
             {/* 페이지 라우터 */}
             <Routes>
                 <Route path="/login" element={ <LoginPage/> }/>
+                <Route path="/sign-up" element={ <SignUpPage/> }/>
             </Routes>
         </Div>
     )
