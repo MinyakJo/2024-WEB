@@ -18,7 +18,9 @@ const MainContainer = styled(Div)<MainContainerType>`
 
 const SignUpContainer = () => {
   return (
-    <MainContainer maxWidth="416px" backgroundColor="white"></MainContainer>
+    <MainContainer maxWidth="416px">
+      <Div></Div>
+    </MainContainer>
   );
 };
 
