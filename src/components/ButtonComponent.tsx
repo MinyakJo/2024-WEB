@@ -1,8 +1,8 @@
 import React from "react";
 
 //component
-import Div from "components/common/Div";
-import Button from "components/common/Button";
+import Div from "layout/Div";
+import Button from "layout/Button";
 
 //type
 type propsType = {

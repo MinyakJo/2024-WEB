@@ -3,14 +3,14 @@ import { useRecoilValue } from "recoil";
 import { loginCheckState } from "recoil/loginAtom";
 
 //component
-import Div from "components/common/Div";
+import Div from "layout/Div";
 import ButtonComponent from "../ButtonComponent";
-import P from "components/common/P";
-import Icon from "components/common/Icon";
-import Img from "components/common/Img";
+import P from "layout/P";
+import Icon from "layout/Icon";
+import Img from "layout/Img";
 
 //icon, img
-import kakao_icon from "../../../svg/login_kakao_icon.svg";
+import kakao_icon from "../../assets/login_kakao_icon.svg";
 
 const LoginButtonComponent = () => {
   //recoil

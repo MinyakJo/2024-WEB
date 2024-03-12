@@ -1,14 +1,14 @@
 // ===== Library =====
 
 import React from "react";
-import GlobalFonts from "./font/font";
+import GlobalFonts from "layout/font/font";
 import { Route, Routes } from "react-router-dom";
 
 // ===== Components =====
 
-import Div from "./components/common/Div";
-import LoginPage from "./components/page/LoginPage";
-import SignUpPage from "components/page/SignUpPage";
+import Div from "layout/Div";
+import LoginPage from "pages/LoginPage";
+import SignUpPage from "pages/SignUpPage";
 
 // ===== Code =====
 

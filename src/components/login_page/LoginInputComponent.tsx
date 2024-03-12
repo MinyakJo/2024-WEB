@@ -4,12 +4,12 @@ import { loginCheckState, pwIsHideState } from "recoil/loginAtom";
 import { debounce } from "lodash";
 
 //component
-import Div from "components/common/Div";
+import Div from "layout/Div";
 import InputComponent from "../InputComponent";
 
 //icon, img
-import mail_icon from "../../../svg/mail_icon.svg";
-import lock_icon from "../../../svg/lock_icon.svg";
+import mail_icon from "../../assets/mail_icon.svg";
+import lock_icon from "../../assets/lock_icon.svg";
 
 const LoginInputComponent = () => {
   //state
@@ -40,7 +40,7 @@ const LoginInputComponent = () => {
     } else {
       setLoginCheck(false);
     }
-  }, 300);
+  }, 50);
   //enter 이벤트
   const onKeyUpEvent = (e: React.KeyboardEvent<HTMLInputElement>) => {
     //아이디가 1자이상, 비민번호 6자 이상일때

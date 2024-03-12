@@ -10,9 +10,9 @@ import {
 import styled from "styled-components";
 
 //component
-import Div from "components/common/Div";
+import Div from "layout/Div";
 import ButtonComponent from "../ButtonComponent";
-import P from "components/common/P";
+import P from "layout/P";
 
 const HiddenText = styled(P)`
   text-align: center;

@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 //component
-import Div from "components/common/Div";
-import Icon from "components/common/Icon";
-import Img from "components/common/Img";
-import Input from "components/common/Input";
-import Button from "components/common/Button";
+import Div from "layout/Div";
+import Icon from "layout/Icon";
+import Img from "layout/Img";
+import Input from "layout/Input";
+import Button from "layout/Button";
 
 //type
 type propsType = {

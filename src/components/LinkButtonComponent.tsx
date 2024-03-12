@@ -1,9 +1,9 @@
 import React from "react";
 
 //component
-import Div from "components/common/Div";
-import P from "components/common/P";
-import Accent from "components/common/Accent";
+import Div from "layout/Div";
+import P from "layout/P";
+import Accent from "layout/Accent";
 
 //type
 type propsType = {

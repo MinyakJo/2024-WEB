@@ -5,12 +5,12 @@ import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { pwIsHideState, loginCheckState } from "recoil/loginAtom";
 
 //component
-import Div from "components/common/Div";
-import Img from "components/common/Img";
-import LoginContainer from "components/component/login_page/LoginContainer";
+import Div from "layout/Div";
+import Img from "layout/Img";
+import LoginContainer from "components/login_page/LoginContainer";
 
 //img, icon
-import phone from "../../svg/login_phone.svg";
+import phone from "../assets/login_phone.svg";
 
 //type
 type MainContainerType = {

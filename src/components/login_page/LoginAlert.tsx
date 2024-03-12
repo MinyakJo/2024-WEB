@@ -2,8 +2,8 @@ import React from "react";
 // import styled from "styled-components"
 
 //component
-import Div from "components/common/Div";
-import P from "components/common/P";
+import Div from "layout/Div";
+import P from "layout/P";
 
 //styled
 // const HiddentText = styled( P )`

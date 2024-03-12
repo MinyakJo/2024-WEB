@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 //component
-import Div from "components/common/Div";
-import Img from "components/common/Img";
+import Div from "layout/Div";
+import Img from "layout/Img";
 import LoginInputComponent from "./LoginInputComponent";
 import LoginButtonComponent from "./LoginButtonComponent";
 import LoginAlert from "./LoginAlert";
@@ -11,7 +11,7 @@ import AppDownloadButtonComponent from "../AppDownloadButtonComponent";
 import LinkButtonComponent from "../LinkButtonComponent";
 
 //img, icon
-import logo from "../../../svg/logo.svg";
+import logo from "../../assets/logo.svg";
 
 //type
 type MainContainerType = {

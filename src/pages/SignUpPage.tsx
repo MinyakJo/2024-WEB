@@ -9,8 +9,8 @@ import {
 } from "recoil/signAtom";
 
 //component
-import Div from "components/common/Div";
-import SignUpContainer from "components/component/sign_up_page/SignUpContainer";
+import Div from "layout/Div";
+import SignUpContainer from "components/sign_up_page/SignUpContainer";
 
 const SignUpPage = () => {
   //recoil

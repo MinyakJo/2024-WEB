@@ -1,14 +1,14 @@
 import React from "react";
 
 //component
-import Div from "components/common/Div";
-import P from "components/common/P";
-import Button from "components/common/Button";
-import Img from "components/common/Img";
+import Div from "layout/Div";
+import P from "layout/P";
+import Button from "layout/Button";
+import Img from "layout/Img";
 
 //img, icon
-import google_button from "../../svg/google_app_store_button.svg";
-import apple_button from "../../svg/apple_app_store_button.svg";
+import google_button from "../assets/google_app_store_button.svg";
+import apple_button from "../assets/apple_app_store_button.svg";
 
 const AppDownloadButtonComponent = () => {
   return (

@@ -2,16 +2,16 @@ import React from "react";
 import styled from "styled-components";
 
 //component
-import Div from "components/common/Div";
-import Img from "components/common/Img";
-import H1 from "components/common/H1";
+import Div from "layout/Div";
+import Img from "layout/Img";
+import H1 from "layout/H1";
 import ButtonComponent from "../ButtonComponent";
-import Icon from "components/common/Icon";
+import Icon from "layout/Icon";
+import P from "layout/P";
 
 //icon, img
-import logo from "../../../svg/logo.svg";
-import kakao_icon from "../../../svg/login_kakao_icon.svg";
-import P from "components/common/P";
+import logo from "../../assets/logo.svg";
+import kakao_icon from "../../assets/login_kakao_icon.svg";
 import SignUpInputComponent from "./SignUpInputComponent";
 import SignUpButtonComponent from "./SignUpButtonComponent";
 import LinkButtonComponent from "../LinkButtonComponent";
