@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { loginCheckState, pwIsHideState } from "recoil/loginAtom";
+import { debounce } from "lodash";
 
 //component
 import Div from "components/common/Div";
@@ -22,11 +23,10 @@ const LoginInputComponent = () => {
   const setLoginCheck = useSetRecoilState(loginCheckState);
   //로그인 숨김 여부 value
   const pwIsHide = useRecoilValue(pwIsHideState);
-  // const [ isHide, setIsHide ] = use
 
   //event
   //input 이벤트
-  const onChangeEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeEvent = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
     const copyInputs = {
       ...inputs,
       [e.target.id]: e.target.value,
@@ -40,7 +40,7 @@ const LoginInputComponent = () => {
     } else {
       setLoginCheck(false);
     }
-  };
+  }, 300);
   //enter 이벤트
   const onKeyUpEvent = (e: React.KeyboardEvent<HTMLInputElement>) => {
     //아이디가 1자이상, 비민번호 6자 이상일때
@@ -67,6 +67,7 @@ const LoginInputComponent = () => {
       {/* 비밀번호 */}
       <Div marginBottom="10px">
         <InputComponent
+          password
           id="pw"
           type={pwIsHide ? "password" : "text"}
           value={inputs.pw}

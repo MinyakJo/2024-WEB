@@ -10,7 +10,7 @@ import Icon from "components/common/Icon";
 import Img from "components/common/Img";
 
 //icon, img
-import kakako_icon from "../../../svg/login_kakako_icon.svg";
+import kakao_icon from "../../../svg/login_kakao_icon.svg";
 
 const LoginButtonComponent = () => {
   //recoil
@@ -40,10 +40,10 @@ const LoginButtonComponent = () => {
           flex="row_center"
           color="brown"
           fontSize="medium"
-          backgroundColor="kakako"
+          backgroundColor="kakao"
         >
           <Icon width="20px" marginRight="2px">
-            <Img src={kakako_icon} />
+            <Img src={kakao_icon} />
           </Icon>
           카카오 로그인
         </ButtonComponent>

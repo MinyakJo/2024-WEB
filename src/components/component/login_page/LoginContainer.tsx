@@ -7,14 +7,11 @@ import Img from "components/common/Img";
 import LoginInputComponent from "./LoginInputComponent";
 import LoginButtonComponent from "./LoginButtonComponent";
 import LoginAlert from "./LoginAlert";
-import P from "components/common/P";
-import Accent from "components/common/Accent";
-import Button from "components/common/Button";
+import AppDownloadButtonComponent from "../AppDownloadButtonComponent";
+import LinkButtonComponent from "../LinkButtonComponent";
 
 //img, icon
 import logo from "../../../svg/logo.svg";
-import google_button from "../../../svg/google_app_store_button.svg";
-import apple_button from "../../../svg/apple_app_store_button.svg";
 
 //type
 type MainContainerType = {
@@ -59,44 +56,11 @@ const LoginContainer = () => {
         <LoginAlert />
       </Div>
       {/* 가입하기 버튼 */}
-      <Div padding="31px 0px" borderColor="200" backgroundColor="white">
-        <Div flex="row_center">
-          <P
-            color="500"
-            fontSize="medium"
-            fontWeight="600"
-            fontFamily="semiBold"
-            lineHeight="24px"
-          >
-            {"계정이 없으신가요? "}
-            <Accent id="sign-up" color="blue" cursor="pointer">
-              가입하기
-            </Accent>
-          </P>
-        </Div>
-      </Div>
+      <LinkButtonComponent link="sign-up" accent="가입하기">
+        계정이 없으신가요?
+      </LinkButtonComponent>
       {/* 앱을 다운로드 하세요, 앱 다운로드 버튼 */}
-      <Div marginTop="20px">
-        {/* 앱을 다운로드 하세요 */}
-        <Div flex="row_center">
-          <P color="500" fontWeight="500" fontSize="medium" lineHeight="24px">
-            앱을 다운로드 하세요.
-          </P>
-        </Div>
-        {/* 앱 다운로드 버튼 */}
-        <Div flex="row_center" marginTop="10px">
-          <Div width="135px" height="40px" marginRight="5px" marginLeft="5px">
-            <Button>
-              <Img src={google_button} />
-            </Button>
-          </Div>
-          <Div width="135px" height="40px" marginRight="5px" marginLeft="5px">
-            <Button>
-              <Img src={apple_button} />
-            </Button>
-          </Div>
-        </Div>
-      </Div>
+      <AppDownloadButtonComponent />
     </MainContainer>
   );
 };

@@ -24,11 +24,17 @@ type propsType = {
   maxSize?: number;
   type?: string;
   value: string;
+  sign?: boolean;
+  password?: boolean;
+  signIcon?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onKeyUp?: React.KeyboardEventHandler<HTMLInputElement>;
 };
 type inputContainerType = {
   boxShadow?: string;
+};
+type PasswordHideButtonContainerType = {
+  maxWidth?: string;
 };
 
 //styled
@@ -37,13 +43,21 @@ const InputContainer = styled(Div)<inputContainerType>`
     return props.boxShadow ? props.boxShadow : null;
   }};
 `;
-const PasswordHideButtonContainer = styled(Div)`
-  min-width: ${(props) => {
-    return props.width ? props.width : null;
+const PasswordHideButtonContainer = styled(
+  Div
+)<PasswordHideButtonContainerType>`
+  max-width: ${(props) => {
+    return props.maxWidth ? props.maxWidth : null;
   }};
+
+  button {
+    white-space: nowrap;
+  }
 `;
 
 const InputComponent = ({
+  sign,
+  signIcon,
   height,
   icon,
   iconWidth,
@@ -56,6 +70,7 @@ const InputComponent = ({
   color,
   borderColor,
   id,
+  password,
   maxSize,
   type,
   onKeyUp,
@@ -67,10 +82,15 @@ const InputComponent = ({
       height={height ? height : "44px"}
       radius="30px"
       padding="13px 14px"
+      paddingBottom="14px"
       borderColor={borderColor ? borderColor : "300"}
     >
       {/* 인풋창 아이콘 */}
-      <Icon width={iconWidth ? iconWidth : "20px"} marginRight="8px">
+      <Icon
+        width={iconWidth ? iconWidth : "20px"}
+        marginTop="2px"
+        marginRight="8px"
+      >
         <Img src={icon} />
       </Icon>
       {/* 인풋창 */}
@@ -86,12 +106,16 @@ const InputComponent = ({
         maxLength={maxSize}
         onChange={onChange}
         onKeyUp={onKeyUp}
-        value={value}
+        defaultValue={value}
         autoComplete="off"
       />
       {/* 비밀번호 표시, 숨기기 버튼 */}
-      {id === "pw" && value.length >= 1 && (
-        <PasswordHideButtonContainer width="100px">
+      {password && value.length >= 1 && (
+        <PasswordHideButtonContainer
+          maxWidth="100px"
+          width="fit-content"
+          marginTop="2px"
+        >
           <Button
             flex="row_end"
             id={type === "password" ? "hidePw" : "showPw"}
@@ -104,6 +128,18 @@ const InputComponent = ({
             {type === "password" ? "비밀번호 표시" : "숨기기"}
           </Button>
         </PasswordHideButtonContainer>
+      )}
+      {/* 회원가입 인풋용 아이콘 */}
+      {sign && value.length > 0 && (
+        <Icon
+          marginTop="2px"
+          paddingLeft="6px"
+          width="30px"
+          height="24px"
+          ratio="0"
+        >
+          <Img src={signIcon} />
+        </Icon>
       )}
     </InputContainer>
   );

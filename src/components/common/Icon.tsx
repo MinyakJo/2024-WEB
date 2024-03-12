@@ -12,6 +12,8 @@ type propsType = {
   flex?: string;
   width?: string;
   height?: string;
+  marginTop?: string;
+  marginBottom?: string;
   marginLeft?: string;
   marginRight?: string;
   paddingTop?: string;
@@ -31,6 +33,9 @@ const Icon = styled.div<propsType>`
 
   width: ${(props) => {
     return props.width ? props.width : null;
+  }};
+  height: ${(props) => {
+    return props.height ? props.height : "fit-content";
   }};
 
   min-width: ${(props) => {
@@ -57,12 +62,17 @@ const Icon = styled.div<propsType>`
     return props.paddingBottom ? props.paddingBottom : null;
   }};
 
-  margin-left: ${(props) => {
-    return props.marginLeft ? props.marginLeft : null;
+  margin-top: ${(props) => {
+    return props.marginTop ? props.marginTop : "0px";
   }};
-
+  margin-bottom: ${(props) => {
+    return props.marginBottom ? props.marginBottom : "0px";
+  }};
+  margin-left: ${(props) => {
+    return props.marginLeft ? props.marginLeft : "0px";
+  }};
   margin-right: ${(props) => {
-    return props.marginRight ? props.marginRight : null;
+    return props.marginRight ? props.marginRight : "0px";
   }};
 
   aspect-ratio: ${(props) => {

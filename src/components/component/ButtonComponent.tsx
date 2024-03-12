@@ -6,6 +6,7 @@ import Button from "components/common/Button";
 
 //type
 type propsType = {
+  id?: string;
   flex?: string;
   backgroundColor?: string;
   fontSize?: string;
@@ -19,6 +20,7 @@ type propsType = {
 };
 
 const ButtonComponent = ({
+  id,
   backgroundColor,
   fontSize,
   fontFamily,
@@ -37,6 +39,7 @@ const ButtonComponent = ({
       backgroundColor={backgroundColor ? backgroundColor : "300"}
     >
       <Button
+        id={id}
         flex={flex}
         fontSize={fontSize ? fontSize : "medium_small"}
         fontFamily={fontFamily}

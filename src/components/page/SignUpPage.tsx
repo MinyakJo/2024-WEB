@@ -1,12 +1,66 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useResetRecoilState, useSetRecoilState } from "recoil";
+import {
+  idCheckState,
+  nameCheckState,
+  pwCheckState,
+  signPwIsHideState,
+  telOrEmailCheckState,
+} from "recoil/signAtom";
 
 //component
 import Div from "components/common/Div";
 import SignUpContainer from "components/component/sign_up_page/SignUpContainer";
 
 const SignUpPage = () => {
+  //recoil
+  //비밀번호 표시 숨기기
+  const setSignPwIsHide = useSetRecoilState(signPwIsHideState);
+
+  //state reset
+  const resetSignPwIsHide = useResetRecoilState(signPwIsHideState);
+  const resetTelOrEmailCheck = useResetRecoilState(telOrEmailCheckState);
+  const resetNameCheck = useResetRecoilState(nameCheckState);
+  const resetIdCheck = useResetRecoilState(idCheckState);
+  const resetPwCheck = useResetRecoilState(pwCheckState);
+  const resetHiddenAlert = useResetRecoilState(signPwIsHideState);
+
   //event
-  const onClickEvent = () => {};
+  //click 이벤트
+  const onClickEvent = (e: React.MouseEvent<HTMLElement>) => {
+    const id = (e.target as HTMLElement).id;
+
+    switch (id) {
+      case "hidePw":
+        setSignPwIsHide(false);
+        return;
+      case "showPw":
+        setSignPwIsHide(true);
+        return;
+      default:
+        return;
+    }
+  };
+
+  //useEffect
+  useEffect(() => {
+    return () => {
+      resetSignPwIsHide();
+      resetTelOrEmailCheck();
+      resetNameCheck();
+      resetIdCheck();
+      resetPwCheck();
+      resetHiddenAlert();
+    };
+  }, [
+    resetSignPwIsHide,
+    resetTelOrEmailCheck,
+    resetNameCheck,
+    resetIdCheck,
+    resetPwCheck,
+    resetPwCheck,
+    resetHiddenAlert,
+  ]);
 
   return (
     <Div
