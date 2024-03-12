@@ -1,35 +1,23 @@
-import React from "react"
-import styled from "styled-components"
+import React from "react";
 
 //component
-import Div from "components/common/Div"
-
-//type
-type MainContainerType = {
-    maxWidth: string
-}
-
-//styled
-const MainContainer = styled( Div )< MainContainerType >`
-    max-width: ${props => {
-        return props.maxWidth ? props.maxWidth : null
-    }};
-`
+import Div from "components/common/Div";
+import SignUpContainer from "components/component/sign_up_page/SignUpContainer";
 
 const SignUpPage = () => {
+  //event
+  const onClickEvent = () => {};
 
-    //event
-    const onClickEvent = () => {
-        
-    }
+  return (
+    <Div
+      flex="row_center"
+      height="100%"
+      backgroundColor="50"
+      onClick={onClickEvent}
+    >
+      <SignUpContainer />
+    </Div>
+  );
+};
 
-    return (
-        <Div flex="row_center" height="100%" backgroundColor="50" onClick={ onClickEvent }>
-            <MainContainer maxWidth="416px" backgroundColor="white">
-                
-            </MainContainer>
-        </Div>
-    )
-}
-
-export default SignUpPage
+export default SignUpPage;
