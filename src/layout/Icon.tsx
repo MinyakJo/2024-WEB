@@ -22,6 +22,7 @@ type propsType = {
   paddingBottom?: string;
   padding?: string;
   backgroundColor?: string;
+  borderColor?: string;
   radius?: string;
   ratio?: string;
 };
@@ -83,6 +84,11 @@ const Icon = styled.div<propsType>`
     return props.radius ? props.radius : null;
   }};
 
+  border: ${(props) => {
+    return props.borderColor
+      ? `1px solid ${CommonStyle.setColor(props.borderColor)}`
+      : null;
+  }};
   background-color: ${(props) => {
     return props.backgroundColor
       ? CommonStyle.setColor(props.backgroundColor)

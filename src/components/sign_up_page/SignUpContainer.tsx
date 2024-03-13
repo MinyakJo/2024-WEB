@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 
 //component
 import Div from "layout/Div";
@@ -8,30 +7,17 @@ import H1 from "layout/H1";
 import ButtonComponent from "../ButtonComponent";
 import Icon from "layout/Icon";
 import P from "layout/P";
+import { MainContainer } from "pages/SignUpPage";
 
 //icon, img
 import logo from "../../assets/logo.svg";
 import kakao_icon from "../../assets/login_kakao_icon.svg";
 import SignUpInputComponent from "./SignUpInputComponent";
 import SignUpButtonComponent from "./SignUpButtonComponent";
-import LinkButtonComponent from "../LinkButtonComponent";
-import AppDownloadButtonComponent from "../AppDownloadButtonComponent";
-
-//type
-type MainContainerType = {
-  maxWidth?: string;
-};
-
-//styled
-const MainContainer = styled(Div)<MainContainerType>`
-  max-width: ${(props) => {
-    return props.maxWidth ? props.maxWidth : null;
-  }};
-`;
 
 const SignUpContainer = () => {
   return (
-    <MainContainer maxWidth="416px">
+    <MainContainer>
       {/* 회원가입 입력창 */}
       <Div
         flex="column_center"
@@ -89,13 +75,6 @@ const SignUpContainer = () => {
         {/* 가입 버튼창 */}
         <SignUpButtonComponent />
       </Div>
-      {/* 계정이 있으신가요? */}
-      <LinkButtonComponent link="login" accent="로그인">
-        계정이 있으신가요?
-      </LinkButtonComponent>
-
-      {/* 앱다운로드 버튼 */}
-      <AppDownloadButtonComponent />
     </MainContainer>
   );
 };

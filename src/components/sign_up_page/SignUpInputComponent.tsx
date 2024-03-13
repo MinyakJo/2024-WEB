@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   idCheckState,
   nameCheckState,
   pwCheckState,
   signHiddenAlertState,
+  signInputsState,
   signPwIsHideState,
   telOrEmailCheckState,
 } from "recoil/signAtom";
@@ -23,10 +24,9 @@ import lock_icon from "../../assets/lock_icon.svg";
 import x_icon from "../../assets/sign_x_icon.svg";
 
 const SignUpInputComponent = () => {
-  //state
-  const [inputs, setInputs] = useState<string[]>([]);
-
   //recoil
+  //회원가입 입력
+  const [inputs, setInputs] = useRecoilState(signInputsState);
   //비밀번호 숨기기, 표시
   const signPwHide = useRecoilValue(signPwIsHideState);
   //전화번호 조건 체크
@@ -40,17 +40,6 @@ const SignUpInputComponent = () => {
   const [pwCheck, setPwCheck] = useRecoilState(pwCheckState);
   //히든 텍스트
   const setHiddenAlert = useSetRecoilState(signHiddenAlertState);
-
-  //useEffect
-  useEffect(() => {
-    const list: string[] = [];
-
-    for (let i = 0; i < 4; i++) {
-      list.push("");
-    }
-
-    setInputs(list);
-  }, []);
 
   //event
   const onChangeEvent = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,17 +100,17 @@ const SignUpInputComponent = () => {
 
         break;
       case 3: //비밀번호
-        const pwReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,20}$/;
+        // const pwReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,20}$/;
 
         //비밀번호 복사
         let copyPwCheck = { ...pwCheck };
 
         //크기 검사
-        if (value.length >= 6) copyPwCheck.length = true;
+        if (value.length > 6) copyPwCheck.length = true;
         else copyPwCheck.length = false;
         //정규식 검사
-        if (pwReg.test(value)) copyPwCheck.reg = true;
-        else copyPwCheck.reg = false;
+        // if (pwReg.test(value)) copyPwCheck.reg = true;
+        // else copyPwCheck.reg = false;
 
         //적용
         setPwCheck(copyPwCheck);
@@ -173,7 +162,7 @@ const SignUpInputComponent = () => {
                 (i === 2 &&
                   (idCheck.dup === undefined || idCheck.dup === true) &&
                   idCheck.reg) ||
-                (i === 3 && pwCheck.reg)
+                (i === 3 && pwCheck.length)
                   ? check_icon
                   : x_icon
               }

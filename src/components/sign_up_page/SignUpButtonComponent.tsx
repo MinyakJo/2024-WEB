@@ -1,13 +1,16 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   signCheckState,
   signHiddenAlertState,
   telOrEmailCheckState,
   nameCheckState,
   idCheckState,
+  signInputsState,
+  isBirthDatePageState,
 } from "recoil/signAtom";
 import styled from "styled-components";
+import { fetch } from "apis/fetch";
 
 //component
 import Div from "layout/Div";
@@ -29,10 +32,43 @@ const SignUpButtonComponent = () => {
   //이름 체크여부
   const nameCheck = useRecoilValue(nameCheckState);
   //아이디 체크여부
-  const idCheck = useRecoilValue(idCheckState);
+  const [idCheck, setIdCheck] = useRecoilState(idCheckState);
+  //회원가입 입력값
+  //0: 전화번호 메일 이메일, 1: 성명, 2: 아이디, 3: 비밀번호
+  const inputs = useRecoilValue(signInputsState);
+  //회원가입 잘못된점 보여주기
+  const setHiddenAlert = useSetRecoilState(signHiddenAlertState);
+  //회원가입 페이지 전환 여부
+  const setIsBirthDatePage = useSetRecoilState(isBirthDatePageState);
+
+  //click 이벤트
+  const onClickEvent = async (e: React.MouseEvent<HTMLElement>) => {
+    const id = (e.target as HTMLElement).id;
+
+    switch (id) {
+      case "sign":
+        if (signCheck) {
+          const fetchData = await fetch({
+            method: "GET",
+            url: `/users?loginId=${inputs[2]}`,
+          });
+          if (fetchData.data?.result) {
+            if (!fetchData.data.result.isExist) setIsBirthDatePage(true);
+            else {
+              const copyIdCheck = { ...idCheck, dup: false };
+              setHiddenAlert(true);
+              setIdCheck(copyIdCheck);
+            }
+          }
+        }
+        return;
+      default:
+        return;
+    }
+  };
 
   return (
-    <Div marginTop="10px">
+    <Div marginTop="10px" onClick={onClickEvent}>
       {/* 로그인 버튼 */}
       <Div height="44px">
         <ButtonComponent
