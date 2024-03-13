@@ -1,7 +1,13 @@
-import React, { useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { loginCheckState, pwIsHideState } from "recoil/loginAtom";
+import React from "react";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  loginCheckState,
+  loginHiddenAlertState,
+  loginInputState,
+  pwIsHideState,
+} from "recoil/loginAtom";
 import { debounce } from "lodash";
+import { useCookies } from "react-cookie";
 
 //component
 import Div from "layout/Div";
@@ -10,19 +16,23 @@ import InputComponent from "../InputComponent";
 //icon, img
 import mail_icon from "../../assets/mail_icon.svg";
 import lock_icon from "../../assets/lock_icon.svg";
+import { fetch } from "apis/fetch";
+import { useNavigate } from "react-router-dom";
 
 const LoginInputComponent = () => {
-  //state
-  const [inputs, setInputs] = useState({
-    id: "",
-    pw: "",
-  });
-
+  //token
+  const [, setCookie] = useCookies(["token", "id"]);
+  //navigate
+  const navigate = useNavigate();
   //recoil
+  //로그인 입력
+  const [inputs, setInputs] = useRecoilState(loginInputState);
   //로그인 버튼 활성화 여부 set
   const setLoginCheck = useSetRecoilState(loginCheckState);
   //로그인 숨김 여부 value
   const pwIsHide = useRecoilValue(pwIsHideState);
+  //로그인 히든 텍스트 보이는지 여부
+  const [hiddenAlert, setHiddenAlert] = useRecoilState(loginHiddenAlertState);
 
   //event
   //input 이벤트
@@ -33,6 +43,10 @@ const LoginInputComponent = () => {
     };
 
     setInputs(copyInputs);
+    setHiddenAlert({
+      ...hiddenAlert,
+      isHidden: true,
+    });
 
     //아이디가 1자이상, 비민번호 6자 이상일때 로그인 버튼 활성화
     if (copyInputs.id.length >= 1 && copyInputs.pw.length >= 6) {
@@ -42,11 +56,35 @@ const LoginInputComponent = () => {
     }
   }, 50);
   //enter 이벤트
-  const onKeyUpEvent = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyUpEvent = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     //아이디가 1자이상, 비민번호 6자 이상일때
     if (inputs.id.length >= 1 && inputs.pw.length >= 6) {
       //엔터키 적용
-      if (e.code === "Enter") console.log("login"); //로그인
+      if (e.code === "Enter") {
+        loginFetch();
+      }
+    }
+  };
+  //로그인
+  const loginFetch = async () => {
+    const fetchData = await fetch({
+      method: "POST",
+      url: "/auth/sign-in",
+      data: {
+        loginId: inputs.id,
+        password: inputs.pw,
+      },
+    });
+
+    if (fetchData?.data?.statusCode === 201) {
+      setCookie("id", fetchData.data.result.id);
+      setCookie("token", fetchData.data.result.jwt);
+      navigate("/", { replace: true });
+    } else {
+      setHiddenAlert({
+        text: fetchData[0],
+        isHidden: false,
+      });
     }
   };
 

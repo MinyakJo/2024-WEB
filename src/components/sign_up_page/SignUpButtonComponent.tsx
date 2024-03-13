@@ -52,8 +52,8 @@ const SignUpButtonComponent = () => {
             method: "GET",
             url: `/users?loginId=${inputs[2]}`,
           });
-          if (fetchData.data?.result) {
-            if (!fetchData.data.result.isExist) setIsBirthDatePage(true);
+          if (fetchData?.data?.result) {
+            if (!fetchData?.data.result.isExist) setIsBirthDatePage(true);
             else {
               const copyIdCheck = { ...idCheck, dup: false };
               setHiddenAlert(true);

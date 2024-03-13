@@ -17,8 +17,11 @@ export const fetch = async ({ method, url, data, headers }: fetchType) => {
       data: data,
       headers: headers,
     });
-  } catch (response: any) {
-    throw new Error(response.error);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response?.data.message;
+    }
+    return;
   }
 
   return fetchData;

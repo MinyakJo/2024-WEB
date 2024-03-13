@@ -21,6 +21,10 @@ type signBirthDateType = {
 
 //atom
 //회원가입 데이터
+//0: 전화번호, 이메일
+//1: 성명, 이름
+//2: 아이디
+//3: 비밀번호
 export const signInputsState = atom<string[]>({
   key: "signInputs",
   default: ["", "", "", ""],

@@ -86,7 +86,7 @@ const SignUpInputComponent = () => {
         else setNameCheck(false);
         break;
       case 2: //사용자 이름
-        const nickNameReg = /^[가-힣a-z\_\.]+$/;
+        const nickNameReg = /^[a-z0-9\_\.]+$/;
 
         //사용자 이름 체크 복사
         let copyIdCheck = { ...idCheck };
@@ -138,7 +138,7 @@ const SignUpInputComponent = () => {
                   : i === 1
                   ? "성명"
                   : i === 2
-                  ? "사용자 이름"
+                  ? "아이디(영문 + 숫자)"
                   : i === 3
                   ? "비밀번호"
                   : ""
