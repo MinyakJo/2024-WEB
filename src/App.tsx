@@ -9,6 +9,8 @@ import { Route, Routes } from "react-router-dom";
 import Div from "layout/Div";
 import LoginPage from "pages/LoginPage";
 import SignUpPage from "pages/SignUpPage";
+import HomePage from "pages/HomePage";
+import { isLogin } from "utils/isLogin";
 
 // ===== Code =====
 
@@ -19,6 +21,7 @@ const App = () => {
       <GlobalFonts />
       {/* 페이지 라우터 */}
       <Routes>
+        <Route path="/" element={isLogin(<HomePage />)} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
       </Routes>

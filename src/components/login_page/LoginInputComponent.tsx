@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 
 const LoginInputComponent = () => {
   //token
-  const [, setCookie] = useCookies(["token", "id"]);
+  const [, setCookie] = useCookies(["token", "id", "loginId"]);
   //navigate
   const navigate = useNavigate();
   //recoil
@@ -77,8 +77,9 @@ const LoginInputComponent = () => {
     });
 
     if (fetchData?.data?.statusCode === 201) {
+      setCookie("loginId", inputs.id);
       setCookie("id", fetchData.data.result.id);
-      setCookie("token", fetchData.data.result.jwt);
+      setCookie("token", `Bearer ${fetchData.data.result.jwt}`);
       navigate("/", { replace: true });
     } else {
       setHiddenAlert({

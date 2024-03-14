@@ -27,6 +27,6 @@ export const loginHiddenAlertState = atom({
   key: "loginHiddenAlert",
   default: {
     text: "",
-    isHidden: false,
+    isHidden: true,
   },
 });
