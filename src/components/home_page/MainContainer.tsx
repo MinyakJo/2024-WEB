@@ -47,13 +47,17 @@ const MainContainer = () => {
     if (data?.result) {
       setFeedDataList(data.result.feedList);
       setPage(1);
-      console.log(isLoading);
     }
   }, [data]);
   return (
     <Main>
       {/* 게시물 */}
-      <Div width="fit-content" flex="column_center">
+      <Div
+        width="fit-content"
+        flex="column_center"
+        paddingLeft="10px"
+        marginRight="52px"
+      >
         <FeedListContainer />
         {isLoading && (
           <Div flex="row_center" height="100%">

@@ -1,6 +1,12 @@
 import React from "react";
-import { feedDataListState } from "recoil/mainAtom";
-import { useRecoilValue } from "recoil";
+import {
+  commentLayoutIsOpenState,
+  feedDataListState,
+  feedLayoutIsOpenState,
+  selectedFeedIdState,
+  selectedFeedIndexState,
+} from "recoil/mainAtom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import CommonStyle from "components/style";
 import { createdAtFormat } from "utils/createdAtFormat";
@@ -43,9 +49,70 @@ const Text = styled(P)`
 const FeedButtonsComponent = ({ index }: { index: number }) => {
   //recoil
   const feedData = useRecoilValue(feedDataListState);
+  const [commentLayOutIsOpen, setCommentLayoutIsOpen] = useRecoilState(
+    commentLayoutIsOpenState
+  );
+  const [feedLayOutIsOpen, setFeedLayoutIsOpen] = useRecoilState(
+    feedLayoutIsOpenState
+  );
+  const [selectedFeedId, setSelectedFeedId] =
+    useRecoilState(selectedFeedIdState);
+  const setSelectedFeedIndex = useSetRecoilState(selectedFeedIndexState);
+
+  //event
+  const onClickEvent = (e: React.MouseEvent<HTMLElement>) => {
+    const id = (e.target as HTMLElement).id;
+    const type = id.split("_")[0];
+
+    switch (type) {
+      case "like":
+        return;
+      case "comment":
+        if (id.split("_")[1] === "open") {
+          setIdAndOpen(
+            commentLayOutIsOpen,
+            setCommentLayoutIsOpen,
+            setFeedLayoutIsOpen
+          );
+        } else {
+        }
+        return;
+      case "bookmark":
+        return;
+      case "feed":
+        setIdAndOpen(
+          feedLayOutIsOpen,
+          setFeedLayoutIsOpen,
+          setCommentLayoutIsOpen
+        );
+        return;
+      default:
+        return;
+    }
+  };
+
+  const setIdAndOpen = (
+    isOpen: boolean,
+    setIsOpen: any,
+    otherSetIsOpen: any
+  ) => {
+    if (selectedFeedId !== undefined) {
+      //만일 선택된 id가 다르다면
+      if (feedData[index].id !== selectedFeedId) {
+        //다른창 닫기
+        otherSetIsOpen(false);
+      }
+    }
+    //피드 id 등록
+    setSelectedFeedId(feedData[index].id);
+    //피드 인덱스 등록
+    setSelectedFeedIndex(index);
+    //레이아웃 오픈 여부
+    setIsOpen(!isOpen);
+  };
 
   return (
-    <Div padding="20px 15px">
+    <Div padding="20px 15px" onClick={onClickEvent}>
       {/* 버튼 아이콘 */}
       <Div flex="row_between">
         {/* 하트, 말풍선 아이콘 */}
@@ -54,7 +121,14 @@ const FeedButtonsComponent = ({ index }: { index: number }) => {
             <Img src={heart_icon} id={`like_${index}`} />
           </Icon>
           <Icon width="24px">
-            <Img src={text_ballon_icon} id={`text_${index}`} />
+            <Img
+              src={text_ballon_icon}
+              id={
+                (feedData[index].feedCommentCount as number) < 3
+                  ? "comment_open"
+                  : "comment_to"
+              }
+            />
           </Icon>
         </Div>
         {/* 사진 갯수, 현재위치 */}
@@ -99,7 +173,9 @@ const FeedButtonsComponent = ({ index }: { index: number }) => {
               </Div>
               {/* 더보기 */}
               <Div width="fit-content">
-                <Button color="500">더보기</Button>
+                <Button color="500" id="feed_open">
+                  더보기
+                </Button>
               </Div>
             </>
           ) : (
@@ -111,6 +187,11 @@ const FeedButtonsComponent = ({ index }: { index: number }) => {
         {/* 댓글 더보기 */}
         <Div width="fit-content" marginTop="5px">
           <Button
+            id={
+              (feedData[index].feedCommentCount as number) < 3
+                ? "comment_open"
+                : "comment_to"
+            }
             color="#999999"
             fontWeight="500"
             fontSize="small"

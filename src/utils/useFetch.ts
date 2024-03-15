@@ -6,6 +6,8 @@ type fetchType = {
   url: string;
   data?: any;
   headers?: AxiosRequestHeaders;
+  dependency?: any;
+  condition?: boolean;
 };
 
 type returnType = {
@@ -14,7 +16,14 @@ type returnType = {
   error: any;
 };
 
-const useFetch = ({ method, url, data, headers }: fetchType): returnType => {
+const useFetch = ({
+  method,
+  url,
+  data,
+  headers,
+  dependency,
+  condition,
+}: fetchType): returnType => {
   //state
   const [fData, setFData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +37,7 @@ const useFetch = ({ method, url, data, headers }: fetchType): returnType => {
         data: data,
         headers: headers,
       });
-      console.log(response);
+      console.log(url);
       if (
         response.data.statusCode === 200 ||
         response.data.statusCode === 201
@@ -48,8 +57,10 @@ const useFetch = ({ method, url, data, headers }: fetchType): returnType => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (condition || condition === undefined) {
+      fetchData();
+    }
+  }, [dependency]);
 
   return { data: fData, isLoading, error };
 };

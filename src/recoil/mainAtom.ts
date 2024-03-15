@@ -44,3 +44,22 @@ export const profileDataState = atom<profileDataType>({
     feedCount: 0,
   },
 });
+//댓글 레이아웃
+export const commentLayoutIsOpenState = atom({
+  key: "commentLayoutIsOpen",
+  default: false,
+});
+export const feedLayoutIsOpenState = atom({
+  key: "feedLayoutIsOpen",
+  default: false,
+});
+//선택된 피드 아이디
+export const selectedFeedIdState = atom<number | undefined>({
+  key: "selectedFeedId",
+  default: undefined,
+});
+//선택된 피드 인덱스
+export const selectedFeedIndexState = atom<number | undefined>({
+  key: "selectedFeedIndex",
+  default: undefined,
+});

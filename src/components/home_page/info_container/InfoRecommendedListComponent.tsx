@@ -20,7 +20,7 @@ type recommendListType = {
   isFollow: boolean;
 };
 
-const InfoFollowerComponent = () => {
+const InfoRecommendedListComponent = () => {
   //추천 리스트
   const [recommendList, setRecommendList] = useState<recommendListType[]>([]);
 
@@ -88,7 +88,7 @@ const InfoFollowerComponent = () => {
             >
               {/* 프로필 정보 */}
               <Div flex="row" width="fit-content">
-                <Icon width="30px" marginRight="6px">
+                <Icon width="30px" radius="50%" marginRight="6px">
                   {e?.img && <Img src={e.img} />}
                 </Icon>
                 <Div>
@@ -121,4 +121,4 @@ const InfoFollowerComponent = () => {
   );
 };
 
-export default InfoFollowerComponent;
+export default InfoRecommendedListComponent;
