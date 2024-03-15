@@ -9,8 +9,8 @@ import Img from "layout/Img";
 import Icon from "layout/Icon";
 
 //icon
-import blue_check from "../../assets/drop_down_blue_check_icon.svg";
-import drop_down from "../../assets/drop_down_open_icon.svg";
+import blue_check from "../../../assets/drop_down_blue_check_icon.svg";
+import drop_down from "../../../assets/drop_down_open_icon.svg";
 
 //styled
 const DropdownBox = styled(Div)`

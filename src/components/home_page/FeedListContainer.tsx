@@ -5,7 +5,7 @@ import { feedDataListState } from "recoil/mainAtom";
 
 //component
 import Div from "layout/Div";
-import FeedComponent from "./FeedComponent";
+import FeedComponent from "./feed_list_container/FeedComponent";
 
 //styled
 const MainContainer = styled(Div)`
@@ -15,7 +15,7 @@ const MainContainer = styled(Div)`
 const FeedListContainer = () => {
   //recoil
   const feedDataList = useRecoilValue(feedDataListState);
-  console.log(feedDataList);
+
   return (
     <MainContainer flex="column_center">
       {feedDataList &&

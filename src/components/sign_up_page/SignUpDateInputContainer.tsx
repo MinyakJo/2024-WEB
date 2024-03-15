@@ -6,7 +6,7 @@ import Img from "layout/Img";
 import H1 from "layout/H1";
 import P from "layout/P";
 import { MainContainer } from "pages/SignUpPage";
-import DateDropdownListComponent from "./DateDropdownListComponent";
+import DateDropdownListComponent from "./sign_up_date_input_container/DateDropdownListComponent";
 
 //img, icon
 import cake_icon from "../../assets/sign_birth_date_icon.svg";

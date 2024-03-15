@@ -9,6 +9,7 @@ import { feedDataListState } from "recoil/mainAtom";
 import FeedListContainer from "./FeedListContainer";
 import Div from "layout/Div";
 import Loader from "layout/Loader";
+import InfoContainer from "./InfoContainer";
 
 const Main = styled.main`
   position: relative;
@@ -51,7 +52,8 @@ const MainContainer = () => {
   }, [data]);
   return (
     <Main>
-      <Div flex="column_center">
+      {/* 게시물 */}
+      <Div width="fit-content" flex="column_center">
         <FeedListContainer />
         {isLoading && (
           <Div flex="row_center" height="100%">
@@ -59,7 +61,8 @@ const MainContainer = () => {
           </Div>
         )}
       </Div>
-      {/* <Div flex="row" style={{ minWidth: 416 }}></Div> */}
+      {/* 오른쪽 프로필 정보 및 게시글, 댓글 */}
+      <InfoContainer />
     </Main>
   );
 };

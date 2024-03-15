@@ -6,7 +6,7 @@ import Div from "layout/Div";
 import { MainContainer } from "pages/SignUpPage";
 import H1 from "layout/H1";
 import P from "layout/P";
-import PolicyCheckListComponent from "./PolicyCheckListComponent";
+import PolicyCheckListComponent from "./sign_up_policy_container/PolicyCheckListComponent";
 
 const Text = styled(P)`
   white-space: pre-line;

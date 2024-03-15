@@ -11,8 +11,8 @@ import Icon from "layout/Icon";
 import Loader from "layout/Loader";
 
 //img
-import default_user from "../../assets/test_profile.png";
-import more_circle_icon from "../../assets/more_circle_icon.svg";
+import default_user from "../../../assets/test_profile.png";
+import more_circle_icon from "../../../assets/more_circle_icon.svg";
 
 //styled
 const FeedImgContainer = styled(Div)`
@@ -35,6 +35,7 @@ const ProfileName = styled.h3`
   line-height: 24px;
   font-family: semiBold;
   color: white;
+  cursor: pointer;
 `;
 
 const FeedImg = ({ index }: { index: number }) => {

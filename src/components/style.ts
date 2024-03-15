@@ -6,7 +6,7 @@ import { css } from "styled-components";
 
 const setFontSize = (value: string): string => {
   const font_size = {
-    extra_small: "11px",
+    extra_small: "12px",
     small: "14px",
     medium_small: "15px",
     medium: "16px",

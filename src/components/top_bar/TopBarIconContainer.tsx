@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { nowPageNameState } from "recoil/mainAtom";
+import { useNavigate } from "react-router-dom";
 
 //component
 import Div from "layout/Div";
 import Icon from "layout/Icon";
 import Button from "layout/Button";
 import Img from "layout/Img";
+import Modal from "./Modal";
 
 //img, icon
 import selected_home_icon from "../../assets/selected_home_icon.svg";
@@ -19,7 +21,6 @@ import not_selected_message_icon from "../../assets/not_selected_message_icon.sv
 import not_selected_board_icon from "../../assets/not_selected_board_icon.svg";
 import not_selected_heart_icon from "../../assets/not_selected_heart_icon.svg";
 import test_profile from "../../assets/test_profile.png";
-import Modal from "./Modal";
 
 const TopIcon = styled(Icon)`
   width: 24px;
@@ -36,6 +37,9 @@ const ProfileButton = styled(Button)`
 `;
 
 const TopBarIconContainer = () => {
+  //navigate
+  const navigate = useNavigate();
+
   //state
   const [modalIsOpen, setModalIsOpen] = useState(false);
   //recoil
@@ -47,6 +51,7 @@ const TopBarIconContainer = () => {
 
     switch (id) {
       case "home":
+        navigate("/");
         return;
       case "message":
         return;

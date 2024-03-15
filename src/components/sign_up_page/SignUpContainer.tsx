@@ -12,8 +12,8 @@ import { MainContainer } from "pages/SignUpPage";
 //icon, img
 import logo from "../../assets/logo.svg";
 import kakao_icon from "../../assets/login_kakao_icon.svg";
-import SignUpInputComponent from "./SignUpInputComponent";
-import SignUpButtonComponent from "./SignUpButtonComponent";
+import SignUpInputComponent from "./sign_up_container/SignUpInputComponent";
+import SignUpButtonComponent from "./sign_up_container/SignUpButtonComponent";
 
 const SignUpContainer = () => {
   return (

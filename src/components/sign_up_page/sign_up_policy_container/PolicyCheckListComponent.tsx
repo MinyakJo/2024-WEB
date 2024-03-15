@@ -11,17 +11,17 @@ import {
 } from "recoil/signAtom";
 import { fetch } from "apis/fetch";
 import { dateFormat } from "utils/dataFormat";
+import { useNavigate } from "react-router-dom";
 
 //component
 import Div from "layout/Div";
 import Button from "layout/Button";
 import Img from "layout/Img";
 import ButtonComponent from "components/ButtonComponent";
+import Icon from "layout/Icon";
 
 //icon, img
-import blue_check from "../../assets/blue_check_icon.svg";
-import Icon from "layout/Icon";
-import { useNavigate } from "react-router-dom";
+import blue_check from "../../../assets/blue_check_icon.svg";
 
 //styled
 const PolicyComponent = styled(Div)`

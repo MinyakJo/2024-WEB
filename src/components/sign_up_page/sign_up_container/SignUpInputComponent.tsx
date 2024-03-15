@@ -13,15 +13,15 @@ import { debounce } from "lodash";
 
 //component
 import Div from "layout/Div";
-import InputComponent from "../InputComponent";
+import InputComponent from "../../InputComponent";
 
 //icon, img
-import mail_icon from "../../assets/mail_icon.svg";
-import check_icon from "../../assets/sign_check_icon.svg";
-import user_icon from "../../assets/grey_user_icon.svg";
-import gear_icon from "../../assets/grey_gear_icon.svg";
-import lock_icon from "../../assets/lock_icon.svg";
-import x_icon from "../../assets/sign_x_icon.svg";
+import mail_icon from "../../../assets/mail_icon.svg";
+import check_icon from "../../../assets/sign_check_icon.svg";
+import user_icon from "../../../assets/grey_user_icon.svg";
+import gear_icon from "../../../assets/grey_gear_icon.svg";
+import lock_icon from "../../../assets/lock_icon.svg";
+import x_icon from "../../../assets/sign_x_icon.svg";
 
 const SignUpInputComponent = () => {
   //recoil

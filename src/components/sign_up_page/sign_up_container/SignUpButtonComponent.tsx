@@ -14,7 +14,7 @@ import { fetch } from "apis/fetch";
 
 //component
 import Div from "layout/Div";
-import ButtonComponent from "../ButtonComponent";
+import ButtonComponent from "../../ButtonComponent";
 import P from "layout/P";
 
 const HiddenText = styled(P)`

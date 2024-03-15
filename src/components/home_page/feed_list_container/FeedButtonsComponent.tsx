@@ -3,6 +3,7 @@ import { feedDataListState } from "recoil/mainAtom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import CommonStyle from "components/style";
+import { createdAtFormat } from "utils/createdAtFormat";
 
 //component
 import Div from "layout/Div";
@@ -12,19 +13,19 @@ import P from "layout/P";
 import Button from "layout/Button";
 
 //img, icon
-import heart_icon from "../../assets/selected_heart_icon.svg";
-import text_ballon_icon from "../../assets/text_ballon_icon.svg";
-import bookmark_icon from "../../assets/bookmark_icon.svg";
+import heart_icon from "../../../assets/selected_heart_icon.svg";
+import text_ballon_icon from "../../../assets/text_ballon_icon.svg";
+import bookmark_icon from "../../../assets/bookmark_icon.svg";
 
 //styled
-const CommentContainer = styled(Div)`
+const TextContainer = styled(Div)`
   p,
   button {
     font-size: ${CommonStyle.setFontSize("small")};
     line-height: 20px;
   }
 `;
-const Comment = styled(P)`
+const LongText = styled(P)`
   display: -webkit-box;
   width: 100%;
   overflow: hidden;
@@ -34,8 +35,13 @@ const Comment = styled(P)`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
 `;
+const Text = styled(P)`
+  word-wrap: break-word;
+  white-space: pre-line;
+`;
 
 const FeedButtonsComponent = ({ index }: { index: number }) => {
+  //recoil
   const feedData = useRecoilValue(feedDataListState);
 
   return (
@@ -60,7 +66,7 @@ const FeedButtonsComponent = ({ index }: { index: number }) => {
           </Icon>
         </Div>
       </Div>
-      {/* 좋아요, 댓글, 댓글 더보기, 시간 */}
+      {/* 좋아요, 작성내용, 댓글 더보기, 시간 */}
       <Div marginTop="15px">
         {/* 좋아요 */}
         <Div>
@@ -71,26 +77,37 @@ const FeedButtonsComponent = ({ index }: { index: number }) => {
             lineHeight="20px"
             color="900"
           >
-            {`좋아요`}
+            {/* 좋아요 데이터를 안줌 */}
+            {`좋아요 0개`}
           </P>
         </Div>
-        {/* 댓글 */}
-        <CommentContainer flex="row">
+        {/* 작성내용 */}
+        <TextContainer flex="row_top">
           {/* 닉네임 */}
           <Div width="fit-content" marginRight="5px">
             <P fontWeight="700" color="900" fontFamily="bold">
               {feedData[index].feedLoginId}
             </P>
           </Div>
-          {/* 작성내용 */}
-          <Div width="40px">
-            <Comment fontWeight="500">테스트댓글댓글댓글댓글</Comment>
-          </Div>
-          {/* 더보기 */}
-          <Div width="fit-content">
-            <Button color="500">더보기</Button>
-          </Div>
-        </CommentContainer>
+          {/* 내용 */}
+          {(feedData[index].feedText as string).length +
+            (feedData[index].feedLoginId as string).length >
+          100 ? (
+            <>
+              <Div width="40px">
+                <LongText fontWeight="500">{feedData[index].feedText}</LongText>
+              </Div>
+              {/* 더보기 */}
+              <Div width="fit-content">
+                <Button color="500">더보기</Button>
+              </Div>
+            </>
+          ) : (
+            <Div>
+              <Text>{feedData[index].feedText}</Text>
+            </Div>
+          )}
+        </TextContainer>
         {/* 댓글 더보기 */}
         <Div width="fit-content" marginTop="5px">
           <Button
@@ -100,6 +117,17 @@ const FeedButtonsComponent = ({ index }: { index: number }) => {
             lineHeight="20px"
           >
             {`댓글 ${feedData[index].feedCommentCount}개 모두보기`}
+          </Button>
+        </Div>
+        {/* 작성 시간 */}
+        <Div width="fit-content" marginTop="10px">
+          <Button
+            fontWeight="500"
+            fontSize="extra_small"
+            lineHeight="20px"
+            color="300"
+          >
+            {createdAtFormat(new Date(feedData[index].createdAt as string))}
           </Button>
         </Div>
       </Div>
