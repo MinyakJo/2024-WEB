@@ -1,13 +1,18 @@
 import React from "react";
+import styled from "styled-components";
 
 //component
 import Div from "layout/Div";
 import FeedImg from "./FeedImg";
 import FeedButtonsComponent from "./FeedButtonsComponent";
 
+const FeedContainer = styled(Div)`
+  overflow: hidden;
+`;
+
 const FeedComponent = ({ index }: { index: number }) => {
   return (
-    <Div
+    <FeedContainer
       flex="column_center"
       radius="10px"
       borderColor="200"
@@ -16,8 +21,8 @@ const FeedComponent = ({ index }: { index: number }) => {
     >
       <FeedImg index={index} />
       <FeedButtonsComponent index={index} />
-    </Div>
+    </FeedContainer>
   );
 };
 
-export default FeedComponent;
+export default React.memo(FeedComponent);

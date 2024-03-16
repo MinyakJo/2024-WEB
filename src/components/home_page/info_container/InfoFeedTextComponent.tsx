@@ -23,7 +23,7 @@ const MainContainer = styled(Div)<MainContainerType>`
   opacity: ${(props) => {
     return props.opacity ? props.opacity : null;
   }};
-  transition: opacity 0.5s;
+  transition: opacity 1s;
   ::-webkit-scrollbar {
     width: 0px;
   }

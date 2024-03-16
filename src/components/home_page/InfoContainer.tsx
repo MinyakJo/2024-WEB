@@ -39,4 +39,4 @@ const InfoContainer = () => {
   );
 };
 
-export default InfoContainer;
+export default React.memo(InfoContainer);

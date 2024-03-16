@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import useFetch from "utils/useFetch";
 import { useCookies } from "react-cookie";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { feedDataListState } from "recoil/mainAtom";
+import { scrollLoad } from "utils/scrollLoad";
+import { throttle, debounce } from "lodash";
 
 //component
 import FeedListContainer from "./FeedListContainer";
@@ -31,26 +33,55 @@ const Main = styled.main`
 const MainContainer = () => {
   //cookie
   const [cookies] = useCookies(["token"]);
+
+  //ref
+  const ref = useRef(null);
+
   //state
   const [page, setPage] = useState(1);
 
   //recoil
-  const setFeedDataList = useSetRecoilState(feedDataListState);
+  const [feedDataList, setFeedDataList] = useRecoilState(feedDataListState);
 
   //fetch
   const { data, isLoading } = useFetch({
     method: "GET",
     url: `/feeds?size=10&page=${page}`,
     headers: { Authorization: cookies.token },
+    dependency: page,
   });
+
+  //useEffect
   useEffect(() => {
     if (data?.result) {
-      setFeedDataList(data.result.feedList);
-      setPage(1);
+      //feedDataList가 비어있지 않다면 병합
+      if (feedDataList !== undefined) {
+        setFeedDataList(feedDataList.concat(data.result.feedList));
+      } else setFeedDataList(data.result.feedList);
     }
   }, [data]);
+
+  const onScrollEvent = throttle((e: React.MouseEvent<HTMLElement>) => {
+    const scrollHeight = (e.target as HTMLElement).clientHeight; //한 눈에 보이는 스크롤 영역
+    const scroll = (e.target as HTMLElement).scrollTop + scrollHeight; // 현재 스크롤 위치
+    const mainHeight = (e.target as HTMLElement).scrollHeight; //진짜 스크롤 높이
+
+    //데이터가 있다면
+    if (data?.result) {
+      if (
+        scrollLoad({ scroll, scrollHeight, mainHeight }) &&
+        page < data.result.lastPage
+      ) {
+        // setPage 중복 방지
+        const debounceSetPage = debounce(() => {
+          setPage(page + 1);
+        }, 100);
+        debounceSetPage();
+      }
+    }
+  }, 100);
   return (
-    <Main>
+    <Main ref={ref} onScroll={onScrollEvent}>
       {/* 게시물 */}
       <Div
         width="fit-content"

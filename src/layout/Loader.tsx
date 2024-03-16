@@ -48,7 +48,7 @@ type propsType = {
 
 const Loader = ({ width }: propsType) => {
   return (
-    <Div flex="row_center">
+    <Div flex="row_center" height="fit-content!important">
       <Div
         width={width}
         marginRight={`calc( ${width} / 2 )`}

@@ -31,7 +31,7 @@ const MainContainer = styled(Div)<MainContainerType>`
     return props.opacity ? props.opacity : null;
   }};
   overflow: hidden;
-  transition: opacity 0.5s;
+  transition: opacity 1s;
 `;
 const Comment = styled(Div)`
   cursor: pointer;
@@ -90,7 +90,7 @@ const InfoCommentListComponent = () => {
 
   //useEffect
   useEffect(() => {
-    fetchData();
+    if (selectedFeedId !== undefined) fetchData();
   }, [selectedFeedId]);
 
   //event
