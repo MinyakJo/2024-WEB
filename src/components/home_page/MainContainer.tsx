@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import useFetch from "utils/useFetch";
 import { useCookies } from "react-cookie";
-import { useRecoilState } from "recoil";
-import { feedDataListState } from "recoil/mainAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { feedDataListState, isMobileState } from "recoil/mainAtom";
 import { scrollLoad } from "utils/scrollLoad";
 import { throttle, debounce } from "lodash";
 
@@ -12,22 +12,32 @@ import FeedListContainer from "./FeedListContainer";
 import Div from "layout/Div";
 import Loader from "layout/Loader";
 import InfoContainer from "./InfoContainer";
+import ShortFeedListContainer from "./ShortFeedListContainer";
 
-const Main = styled.main`
+//type
+type MainType = {
+  height?: string;
+};
+
+const Main = styled.main<MainType>`
   position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
   width: 100%;
-  height: calc(100% - 80px);
   top: 80px;
   padding: 30px 0px;
   overflow: hidden;
   overflow-y: auto;
   box-sizing: border-box;
+
   ::-webkit-scrollbar {
     width: 0px;
   }
+
+  height: ${(props) => {
+    return props.height ? props.height : null;
+  }};
 `;
 
 const MainContainer = () => {
@@ -41,6 +51,7 @@ const MainContainer = () => {
   const [page, setPage] = useState(1);
 
   //recoil
+  const isMobile = useRecoilValue(isMobileState);
   const [feedDataList, setFeedDataList] = useRecoilState(feedDataListState);
 
   //fetch
@@ -81,14 +92,19 @@ const MainContainer = () => {
     }
   }, 100);
   return (
-    <Main ref={ref} onScroll={onScrollEvent}>
+    <Main
+      ref={ref}
+      onScroll={onScrollEvent}
+      height={!isMobile ? "calc(100% - 80px)" : "calc(100% - 141px)"}
+    >
       {/* 게시물 */}
       <Div
         width="fit-content"
         flex="column_center"
         paddingLeft="10px"
-        marginRight="52px"
+        marginRight={!isMobile ? "104px" : undefined}
       >
+        <ShortFeedListContainer />
         <FeedListContainer />
         {isLoading && (
           <Div flex="row_center" height="100%">
@@ -97,7 +113,7 @@ const MainContainer = () => {
         )}
       </Div>
       {/* 오른쪽 프로필 정보 및 게시글, 댓글 */}
-      <InfoContainer />
+      {!isMobile && <InfoContainer />}
     </Main>
   );
 };

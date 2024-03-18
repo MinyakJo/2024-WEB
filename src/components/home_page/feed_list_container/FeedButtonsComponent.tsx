@@ -1,12 +1,11 @@
 import React from "react";
 import {
   commentLayoutIsOpenState,
-  feedDataListState,
   feedLayoutIsOpenState,
   selectedFeedIdState,
   selectedFeedIndexState,
 } from "recoil/mainAtom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import CommonStyle from "components/style";
 import { createdAtFormat } from "utils/createdAtFormat";
@@ -46,9 +45,14 @@ const Text = styled(P)`
   white-space: pre-line;
 `;
 
-const FeedButtonsComponent = ({ index }: { index: number }) => {
+const FeedButtonsComponent = ({
+  children,
+  index,
+}: {
+  children: any;
+  index: number;
+}) => {
   //recoil
-  const feedData = useRecoilValue(feedDataListState);
   const [commentLayOutIsOpen, setCommentLayoutIsOpen] = useRecoilState(
     commentLayoutIsOpenState
   );
@@ -98,13 +102,13 @@ const FeedButtonsComponent = ({ index }: { index: number }) => {
   ) => {
     if (selectedFeedId !== undefined) {
       //만일 선택된 id가 다르다면
-      if (feedData[index].id !== selectedFeedId) {
+      if (children.id !== selectedFeedId) {
         //다른창 닫기
         otherSetIsOpen(false);
       }
     }
     //피드 id 등록
-    setSelectedFeedId(feedData[index].id);
+    setSelectedFeedId(children.id);
     //피드 인덱스 등록
     setSelectedFeedIndex(index);
     //레이아웃 오픈 여부
@@ -118,13 +122,13 @@ const FeedButtonsComponent = ({ index }: { index: number }) => {
         {/* 하트, 말풍선 아이콘 */}
         <Div flex="row" width="fit-content">
           <Icon width="24px" marginRight="15px">
-            <Img src={heart_icon} id={`like_${index}`} />
+            <Img src={heart_icon} id={`like_${children?.id}`} />
           </Icon>
           <Icon width="24px">
             <Img
               src={text_ballon_icon}
               id={
-                (feedData[index].feedCommentCount as number) < 3
+                (children.feedCommentCount as number) < 3
                   ? "comment_open"
                   : "comment_to"
               }
@@ -136,7 +140,7 @@ const FeedButtonsComponent = ({ index }: { index: number }) => {
         {/* 북마크 */}
         <Div width="fit-content">
           <Icon width="24px">
-            <Img src={bookmark_icon} id={`bookmark_${index}`} />
+            <Img src={bookmark_icon} id={`bookmark_${children?.id}`} />
           </Icon>
         </Div>
       </Div>
@@ -160,16 +164,18 @@ const FeedButtonsComponent = ({ index }: { index: number }) => {
           {/* 닉네임 */}
           <Div width="fit-content" marginRight="5px">
             <P fontWeight="700" color="900" fontFamily="bold">
-              {feedData[index].feedLoginId}
+              {children?.feedLoginId ? children.feedLoginId : ""}
             </P>
           </Div>
           {/* 내용 */}
-          {(feedData[index].feedText as string).length +
-            (feedData[index].feedLoginId as string).length >
+          {(children?.feedText as string).length +
+            (children?.feedLoginId as string).length >
           100 ? (
             <>
               <Div width="40px">
-                <LongText fontWeight="500">{feedData[index].feedText}</LongText>
+                <LongText fontWeight="500">
+                  {children?.feedText ? children.feedText : ""}
+                </LongText>
               </Div>
               {/* 더보기 */}
               <Div width="fit-content">
@@ -180,7 +186,7 @@ const FeedButtonsComponent = ({ index }: { index: number }) => {
             </>
           ) : (
             <Div>
-              <Text>{feedData[index].feedText}</Text>
+              <Text>{children?.feedText ? children.feedText : ""}</Text>
             </Div>
           )}
         </TextContainer>
@@ -188,7 +194,7 @@ const FeedButtonsComponent = ({ index }: { index: number }) => {
         <Div width="fit-content" marginTop="5px">
           <Button
             id={
-              (feedData[index].feedCommentCount as number) < 3
+              (children?.feedCommentCount as number) < 3
                 ? "comment_open"
                 : "comment_to"
             }
@@ -197,7 +203,9 @@ const FeedButtonsComponent = ({ index }: { index: number }) => {
             fontSize="small"
             lineHeight="20px"
           >
-            {`댓글 ${feedData[index].feedCommentCount}개 모두보기`}
+            {`댓글 ${
+              children?.feedCommentCount ? children.feedCommentCount : 0
+            }개 모두보기`}
           </Button>
         </Div>
         {/* 작성 시간 */}
@@ -208,7 +216,7 @@ const FeedButtonsComponent = ({ index }: { index: number }) => {
             lineHeight="20px"
             color="300"
           >
-            {createdAtFormat(new Date(feedData[index].createdAt as string))}
+            {createdAtFormat(new Date(children?.createdAt as string))}
           </Button>
         </Div>
       </Div>

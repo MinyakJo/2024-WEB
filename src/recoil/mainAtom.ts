@@ -20,8 +20,18 @@ export type profileDataType = {
   followingCount?: number;
   feedCount?: number;
 };
+export type commentDataListType = {
+  id: number;
+  writeUserLoginId: string;
+  commentText: string;
+}[];
 
 //atom
+//너비가 모바일인가
+export const isMobileState = atom<boolean | undefined>({
+  key: "isMobile",
+  default: false,
+});
 //현재 페이지 위치
 export const nowPageNameState = atom({
   key: "nowPageName",
@@ -61,5 +71,10 @@ export const selectedFeedIdState = atom<number | undefined>({
 //선택된 피드 인덱스
 export const selectedFeedIndexState = atom<number | undefined>({
   key: "selectedFeedIndex",
+  default: undefined,
+});
+// 특정 피드 댓글리스트
+export const commentDataListState = atom<commentDataListType>({
+  key: "commentDataList",
   default: undefined,
 });

@@ -1,26 +1,35 @@
 import React from "react";
 import styled from "styled-components";
+import CommonStyle from "components/style";
 
 //component
-import Div from "layout/Div";
 import FeedImg from "./FeedImg";
 import FeedButtonsComponent from "./FeedButtonsComponent";
+import FeedCommentComponent from "./FeedCommentComponent";
 
-const FeedContainer = styled(Div)`
+const FeedContainer = styled.article`
+  ${CommonStyle.setFlex("column_center")};
+  width: 100%;
+  height: fit-content;
   overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid ${CommonStyle.setColor("200")};
+  background-color: white;
+  margin-bottom: 20px;
 `;
 
-const FeedComponent = ({ index }: { index: number }) => {
+const FeedComponent = ({
+  children,
+  index,
+}: {
+  children: any;
+  index: number;
+}) => {
   return (
-    <FeedContainer
-      flex="column_center"
-      radius="10px"
-      borderColor="200"
-      backgroundColor="white"
-      marginBottom="20px"
-    >
-      <FeedImg index={index} />
-      <FeedButtonsComponent index={index} />
+    <FeedContainer>
+      <FeedImg>{children}</FeedImg>
+      <FeedButtonsComponent index={index}>{children}</FeedButtonsComponent>
+      <FeedCommentComponent index={index}>{children}</FeedCommentComponent>
     </FeedContainer>
   );
 };

@@ -1,8 +1,6 @@
 import React from "react";
 import CommonStyle from "components/style";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
-import { feedDataListState } from "recoil/mainAtom";
 
 //component
 import Div from "layout/Div";
@@ -37,10 +35,7 @@ const ProfileName = styled.h3`
   cursor: pointer;
 `;
 
-const FeedImg = ({ index }: { index: number }) => {
-  //recoil
-  const data = useRecoilValue(feedDataListState);
-
+const FeedImg = ({ children }: { children: any }) => {
   return (
     <FeedImgContainer>
       <Overlay>
@@ -53,7 +48,7 @@ const FeedImg = ({ index }: { index: number }) => {
             </Icon>
             {/* 이름 */}
             <Div width="fit-content">
-              <ProfileName>{data[index]?.feedLoginId}</ProfileName>
+              <ProfileName>{children?.feedLoginId}</ProfileName>
             </Div>
           </Div>
           {/* 더보기 */}
@@ -62,7 +57,7 @@ const FeedImg = ({ index }: { index: number }) => {
           </Icon>
         </Div>
       </Overlay>
-      <Slider dots>{data[index].contentList}</Slider>
+      <Slider dots>{children?.contentList}</Slider>
     </FeedImgContainer>
   );
 };

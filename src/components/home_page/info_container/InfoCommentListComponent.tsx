@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
-import { commentLayoutIsOpenState, selectedFeedIdState } from "recoil/mainAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  commentDataListState,
+  commentLayoutIsOpenState,
+  feedDataListState,
+  selectedFeedIdState,
+} from "recoil/mainAtom";
 import { useCookies } from "react-cookie";
 import CommonStyle from "components/style";
 import { debounce } from "lodash";
@@ -13,7 +18,7 @@ import Icon from "layout/Icon";
 import Img from "layout/Img";
 import Button from "layout/Button";
 import P from "layout/P";
-import Input from "layout/Input";
+import CommentInputComponent from "components/CommentInputComponent";
 
 //img, icon
 import test_profile from "../../../assets/test_profile.png";
@@ -51,13 +56,6 @@ const Comment = styled(Div)`
     -webkit-line-clamp: 1;
   }
 `;
-const InputContainer = styled(Div)`
-  border-top: 0.5px solid ${CommonStyle.setColor("300")};
-
-  button {
-    white-space: nowrap;
-  }
-`;
 
 const InfoCommentListComponent = () => {
   //cookie
@@ -66,12 +64,14 @@ const InfoCommentListComponent = () => {
 
   //state
   const [input, setInput] = useState("");
-  const [data, setData] = useState<any>();
   const [isLoading, setIsLoading] = useState(true);
+  const [index, setIndex] = useState(0);
 
   //recoil
-  const isOpen = useRecoilValue(commentLayoutIsOpenState);
+  const [data, setData] = useRecoilState(commentDataListState);
+  const [isOpen, setIsOpen] = useRecoilState(commentLayoutIsOpenState);
   const selectedFeedId = useRecoilValue(selectedFeedIdState);
+  const [feedDataList, setFeedDataList] = useRecoilState(feedDataListState);
 
   //fetch
   const fetchData = async () => {
@@ -82,8 +82,8 @@ const InfoCommentListComponent = () => {
       headers: headers,
     });
 
-    if (fetchData.data?.result) {
-      setData(fetchData.data.result);
+    if (fetchData.data?.result !== undefined) {
+      setData(fetchData.data.result.commentList);
       setIsLoading(false);
     }
   };
@@ -91,10 +91,16 @@ const InfoCommentListComponent = () => {
   //useEffect
   useEffect(() => {
     if (selectedFeedId !== undefined) fetchData();
+    if (feedDataList !== undefined) {
+      // id가 있는 index 구하기
+      const feedIndex = feedDataList.map((e) => e.id).indexOf(selectedFeedId);
+
+      setIndex(feedIndex);
+    }
   }, [selectedFeedId]);
 
   //event
-  const onChageEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
   const onClickEvent = async (e: React.MouseEvent<HTMLElement>) => {
@@ -133,8 +139,26 @@ const InfoCommentListComponent = () => {
       url: `/feeds/${selectedFeedId}/comments?size=3&page=1`,
       headers: headers,
     });
-    if (afterFetch.data?.result) {
-      setData(afterFetch.data.result);
+    // 전송 후 fetch 설정
+    if (afterFetch.data !== undefined) {
+      setData(afterFetch.data.result.commentList);
+    }
+    // 댓글 갯수 수정
+    if (feedDataList !== undefined) {
+      const list = [...feedDataList];
+      const commentCount = feedDataList[index].feedCommentCount as number;
+
+      list.splice(index, 1, {
+        ...feedDataList[index],
+        feedCommentCount: commentCount + 1,
+      });
+
+      //댓글이 3개 넘어가면 댓글 레이아웃 닫기
+      if (commentCount + 1 > 2) {
+        setIsOpen(false);
+      }
+
+      setFeedDataList(list);
     }
   };
 
@@ -154,8 +178,8 @@ const InfoCommentListComponent = () => {
         </Div>
       ) : (
         <Div padding="0px 15px" paddingBottom="5px">
-          {data?.commentList &&
-            (data.commentList as Array<any>).map((e, i) => (
+          {data &&
+            (data as Array<any>).map((e, i) => (
               <Comment
                 flex="row"
                 key={`comment_${selectedFeedId}_${i}`}
@@ -196,32 +220,12 @@ const InfoCommentListComponent = () => {
         </Div>
       )}
       {/* 댓글 쓰는 창 */}
-      <InputContainer flex="row" padding="10px 15px">
-        <Icon width="35px" marginRight="10px" radius="50%">
-          <Img src={test_profile} />
-        </Icon>
-        <Input
-          value={input}
-          onKeyUp={onKeyUpEvent}
-          onChange={onChageEvent}
-          placeholder="댓글 달기..."
-          placeholderColor="300"
-          fontWeight="500"
-          fontSize="small"
-        />
-        <Div width="fit-content" paddingBottom="2px">
-          <Button
-            id="upload"
-            color={input.length > 0 ? "blue" : "sky_blue"}
-            fontFamily="bold"
-            fontSize="small"
-            fontWeight="700"
-            lineHeight="20px"
-          >
-            게시
-          </Button>
-        </Div>
-      </InputContainer>
+      <CommentInputComponent
+        value={input}
+        onKeyUp={onKeyUpEvent}
+        onChange={onChangeEvent}
+        profile={test_profile}
+      />
     </MainContainer>
   );
 };

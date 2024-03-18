@@ -2,15 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import CommonStyle from "components/style";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { isMobileState } from "recoil/mainAtom";
 
 //component
 import Div from "layout/Div";
 import Img from "layout/Img";
+import Search from "./Search";
+import TopBarIconContainer from "./TopBarIconContainer";
 
 //icon, img
 import logo from "../../assets/logo.svg";
-import Search from "./Search";
-import TopBarIconContainer from "./TopBarIconContainer";
 
 const MainContainer = styled.nav`
   position: fixed;
@@ -29,6 +31,9 @@ const TopBar = () => {
   //navigate
   const navigate = useNavigate();
 
+  //recoi
+  const isMobile = useRecoilValue(isMobileState);
+
   //event
   const onClickEvent = () => {
     navigate("/");
@@ -43,7 +48,7 @@ const TopBar = () => {
       {/* 검색창 */}
       <Search />
       {/* 아이콘 */}
-      <TopBarIconContainer />
+      {!isMobile && <TopBarIconContainer />}
     </MainContainer>
   );
 };

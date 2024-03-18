@@ -20,7 +20,9 @@ const FeedListContainer = () => {
     <MainContainer flex="column_center">
       {feedDataList &&
         feedDataList.map((e, i) => (
-          <FeedComponent key={`feed_${e.id}_${i}`} index={i} />
+          <FeedComponent key={`feed_${e.id}_${i}`} index={i}>
+            {e}
+          </FeedComponent>
         ))}
     </MainContainer>
   );

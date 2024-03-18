@@ -29,6 +29,7 @@ const TopIcon = styled(Icon)`
 const ProfileIcon = styled(Icon)`
   position: relative;
   border: 0.5px solid white;
+  overflow: visible;
   z-index: 2;
 `;
 const ProfileButton = styled(Button)`
@@ -70,6 +71,7 @@ const TopBarIconContainer = () => {
   return (
     <Div width="211px" flex="row" onClick={onClickEvent}>
       {/* 아이콘 */}
+      {/* 홈 */}
       <TopIcon>
         <Button>
           <Img
@@ -80,6 +82,7 @@ const TopBarIconContainer = () => {
           />
         </Button>
       </TopIcon>
+      {/* 매세지 */}
       <TopIcon>
         <Button>
           <Img
@@ -92,6 +95,7 @@ const TopBarIconContainer = () => {
           />
         </Button>
       </TopIcon>
+      {/* 게시글 쓰기 */}
       <TopIcon>
         <Button>
           <Img
@@ -104,6 +108,7 @@ const TopBarIconContainer = () => {
           />
         </Button>
       </TopIcon>
+      {/* 좋아요 */}
       <TopIcon>
         <Button>
           <Img
@@ -116,6 +121,7 @@ const TopBarIconContainer = () => {
           />
         </Button>
       </TopIcon>
+      {/* 프로필 */}
       <ProfileIcon width="35px" radius="50%" id="profile">
         <ProfileButton>
           <Img src={test_profile} id="profile" />

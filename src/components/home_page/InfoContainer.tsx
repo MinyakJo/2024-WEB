@@ -11,14 +11,12 @@ import InfoFeedTextComponent from "./info_container/InfoFeedTextComponent";
 const StyledDiv = styled(Div)`
   max-width: 426px;
   min-width: 426px;
-  margin-left: 52px;
 `;
 const MainContainer = styled.section`
   position: fixed;
   padding-right: 10px;
   max-width: 426px;
   min-width: 426px;
-  margin-left: 52px;
   box-sizing: border-box;
 `;
 

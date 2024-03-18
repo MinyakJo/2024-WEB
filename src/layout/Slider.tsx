@@ -197,8 +197,8 @@ const Slider = ({ children, dots }: propsType) => {
         <SliderButton
           width="30px"
           right="15px"
-          opacity={imgIndex + 1 < imgList.length ? "0.5" : "0.3"}
-          hoverOpacity={imgIndex + 1 < imgList.length ? "0.8" : "0.3"}
+          opacity={imgIndex + 1 < imgList.length ? "0.5" : "0.2"}
+          hoverOpacity={imgIndex + 1 < imgList.length ? "0.8" : "0.2"}
         >
           <Img src={slide_button_icon} id="next" />
         </SliderButton>
