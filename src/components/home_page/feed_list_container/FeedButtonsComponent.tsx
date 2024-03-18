@@ -72,14 +72,11 @@ const FeedButtonsComponent = ({
       case "like":
         return;
       case "comment":
-        if (id.split("_")[1] === "open") {
-          setIdAndOpen(
-            commentLayOutIsOpen,
-            setCommentLayoutIsOpen,
-            setFeedLayoutIsOpen
-          );
-        } else {
-        }
+        setIdAndOpen(
+          commentLayOutIsOpen,
+          setCommentLayoutIsOpen,
+          setFeedLayoutIsOpen
+        );
         return;
       case "bookmark":
         return;
@@ -130,13 +127,11 @@ const FeedButtonsComponent = ({
               id={
                 (children.feedCommentCount as number) < 3
                   ? "comment_open"
-                  : "comment_to"
+                  : "to"
               }
             />
           </Icon>
         </Div>
-        {/* 사진 갯수, 현재위치 */}
-        <Div></Div>
         {/* 북마크 */}
         <Div width="fit-content">
           <Icon width="24px">
@@ -194,9 +189,7 @@ const FeedButtonsComponent = ({
         <Div width="fit-content" marginTop="5px">
           <Button
             id={
-              (children?.feedCommentCount as number) < 3
-                ? "comment_open"
-                : "comment_to"
+              (children?.feedCommentCount as number) < 3 ? "comment_open" : "to"
             }
             color="#999999"
             fontWeight="500"

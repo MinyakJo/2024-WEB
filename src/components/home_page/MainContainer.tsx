@@ -4,8 +4,8 @@ import useFetch from "utils/useFetch";
 import { useCookies } from "react-cookie";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { feedDataListState, isMobileState } from "recoil/mainAtom";
-import { scrollLoad } from "utils/scrollLoad";
-import { throttle, debounce } from "lodash";
+import { throttle } from "lodash";
+import { infiniteScroll } from "utils/infiniteScroll";
 
 //component
 import FeedListContainer from "./FeedListContainer";
@@ -72,24 +72,12 @@ const MainContainer = () => {
     }
   }, [data]);
 
-  const onScrollEvent = throttle((e: React.MouseEvent<HTMLElement>) => {
+  const onScrollEvent = throttle((e: React.UIEvent<HTMLElement>) => {
     const scrollHeight = (e.target as HTMLElement).clientHeight; //한 눈에 보이는 스크롤 영역
     const scroll = (e.target as HTMLElement).scrollTop + scrollHeight; // 현재 스크롤 위치
     const mainHeight = (e.target as HTMLElement).scrollHeight; //진짜 스크롤 높이
 
-    //데이터가 있다면
-    if (data?.result) {
-      if (
-        scrollLoad({ scroll, scrollHeight, mainHeight }) &&
-        page < data.result.lastPage
-      ) {
-        // setPage 중복 방지
-        const debounceSetPage = debounce(() => {
-          setPage(page + 1);
-        }, 100);
-        debounceSetPage();
-      }
-    }
+    infiniteScroll({ scrollHeight, scroll, mainHeight, data, page, setPage });
   }, 100);
   return (
     <Main

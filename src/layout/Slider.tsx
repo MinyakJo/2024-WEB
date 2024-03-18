@@ -27,12 +27,17 @@ type slideButtonType = {
   left?: string;
   transform?: string;
 };
+type slideDotsType = {
+  bottom?: string;
+};
 type propsType = {
-  children?: {
-    id?: number;
-    contentUrl?: string;
-  }[];
-  dots?: boolean;
+  children?:
+    | {
+        id?: number;
+        contentUrl?: string;
+      }[]
+    | string[];
+  dots?: boolean | string;
 };
 
 //styled
@@ -95,9 +100,11 @@ const SliderButton = styled(Div)<slideButtonType>`
     }};
   }
 `;
-const Dots = styled(Div)`
+const Dots = styled(Div)<slideDotsType>`
   position: absolute;
-  bottom: -29px;
+  bottom: ${(props) => {
+    return props.bottom ? props.bottom : null;
+  }};
 `;
 
 const Slider = ({ children, dots }: propsType) => {
@@ -168,7 +175,10 @@ const Slider = ({ children, dots }: propsType) => {
         <SlideBox translateX={`calc( 100% * -${imgIndex} )`}>
           {imgList &&
             imgList.map((e, i) => (
-              <Slide key={`feed_img_${e.id}_${i}`} left={`calc(100% * ${i})`}>
+              <Slide
+                key={`feed_img_${e?.id ? e.id : ""}_${i}`}
+                left={`calc(100% * ${i})`}
+              >
                 {/* 이미지 */}
                 <Div
                   height={!imgLoad[i] ? "0px" : "100%"}
@@ -178,16 +188,16 @@ const Slider = ({ children, dots }: propsType) => {
                     width="none"
                     height={imgLoad[i] ? "100%" : "0px"}
                     onLoad={() => onLoadEvent(i)}
-                    src={e?.contentUrl}
-                    fit="cover"
+                    src={e?.contentUrl ? e.contentUrl : e}
                   />
                 </Div>
                 {/* 이미지 로딩 될때까지의 로딩 */}
                 {!imgLoad[i] && (
-                  <Div height="100%" flex="row_center">
+                  <Div height="100%" flex="row_center" backgroundColor="black">
                     <Loader
-                      key={`feed_loading_img_${e?.id}_${i}`}
+                      key={`feed_loading_img_${e?.id ? e.id : ""}_${i}`}
                       width="10px"
+                      backgroundColor="white"
                     />
                   </Div>
                 )}
@@ -204,7 +214,11 @@ const Slider = ({ children, dots }: propsType) => {
         </SliderButton>
       </SlideContainer>
       {dots && (
-        <Dots flex="row_center" onClick={onClickEvent}>
+        <Dots
+          flex="row_center"
+          bottom={dots === "in" ? "30px" : "-29px"}
+          onClick={onClickEvent}
+        >
           {imgList &&
             imgList.map((e, i) => (
               <Icon

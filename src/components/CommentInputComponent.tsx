@@ -35,7 +35,11 @@ const CommentInputComponent = ({
   padding,
 }: propsType) => {
   return (
-    <InputContainer flex="row" padding={padding ? padding : "10px 15px"}>
+    <InputContainer
+      flex="row"
+      height="100%"
+      padding={padding ? padding : "10px 15px"}
+    >
       {profile && (
         <Icon width="35px" marginRight="10px" radius="50%">
           <Img src={profile} />

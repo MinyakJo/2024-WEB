@@ -11,8 +11,8 @@ const setFontSize = (value: string): string => {
     medium_small: "15px",
     medium: "16px",
     medium_large: "18px",
-    large: "28px",
-    extra_large: "40px",
+    large: "20px",
+    extra_large: "24px",
   };
 
   switch (value) {

@@ -6,11 +6,11 @@ import styled from "styled-components";
 import Div from "layout/Div";
 import Img from "layout/Img";
 import Icon from "layout/Icon";
+import Slider from "layout/Slider";
 
 //img
 import default_user from "../../../assets/test_profile.png";
 import more_circle_icon from "../../../assets/more_circle_icon.svg";
-import Slider from "layout/Slider";
 
 //styled
 const FeedImgContainer = styled(Div)`
@@ -38,7 +38,7 @@ const ProfileName = styled.h3`
 const FeedImg = ({ children }: { children: any }) => {
   return (
     <FeedImgContainer>
-      <Overlay>
+      <Overlay id="to">
         {/* 프로필 사진, 이름, 더보기 */}
         <Div flex="row_between">
           <Div flex="row">

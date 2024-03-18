@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { nowPageNameState } from "recoil/mainAtom";
 import { useNavigate } from "react-router-dom";
+import { dialogState } from "recoil/dialogAtom";
 
 //component
 import Div from "layout/Div";
@@ -45,6 +46,7 @@ const TopBarIconContainer = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   //recoil
   const nowPage = useRecoilValue(nowPageNameState);
+  const [dialog, setDialog] = useRecoilState(dialogState);
 
   //event
   const onClickEvent = (e: React.MouseEvent<HTMLElement>) => {
@@ -57,6 +59,12 @@ const TopBarIconContainer = () => {
       case "message":
         return;
       case "board":
+        const copyDialog = [...dialog];
+        copyDialog.push({
+          type: "board",
+          isOpen: true,
+        });
+        setDialog(copyDialog);
         return;
       case "heart":
         return;
