@@ -126,7 +126,7 @@ const Slider = ({ children, dots }: propsType) => {
       setImgLoad(list);
       setImgList(children);
     }
-  }, []);
+  }, [children]);
 
   const onClickEvent = (e: React.MouseEvent<HTMLElement>) => {
     const id = (e.target as HTMLElement).id;
@@ -181,14 +181,15 @@ const Slider = ({ children, dots }: propsType) => {
               >
                 {/* 이미지 */}
                 <Div
+                  flex="column_center"
                   height={!imgLoad[i] ? "0px" : "100%"}
                   backgroundColor="black"
                 >
                   <Img
-                    width="none"
-                    height={imgLoad[i] ? "100%" : "0px"}
+                    width={imgLoad[i] ? "100%" : "0px"}
+                    height={imgLoad[i] ? "fit-content" : "0px"}
                     onLoad={() => onLoadEvent(i)}
-                    src={e?.contentUrl ? e.contentUrl : e}
+                    src={e?.contentUrl !== undefined ? e.contentUrl : e}
                   />
                 </Div>
                 {/* 이미지 로딩 될때까지의 로딩 */}

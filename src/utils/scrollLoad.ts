@@ -2,9 +2,16 @@ type propsType = {
   scroll: number;
   scrollHeight: number;
   mainHeight: number;
+  loadHeight: number;
 };
 
-export const scrollLoad = ({ scroll, scrollHeight, mainHeight }: propsType) => {
-  if (mainHeight - scroll < 800 && scrollHeight !== mainHeight) return true;
+export const scrollLoad = ({
+  scroll,
+  scrollHeight,
+  mainHeight,
+  loadHeight,
+}: propsType) => {
+  if (mainHeight - scroll < loadHeight && scrollHeight !== mainHeight)
+    return true;
   return false;
 };

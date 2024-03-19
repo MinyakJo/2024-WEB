@@ -65,6 +65,7 @@ const InputText = () => {
   const onChangeEvent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   };
+
   return (
     <Div flex="row_top">
       {/* preview */}

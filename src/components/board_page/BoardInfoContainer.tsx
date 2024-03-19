@@ -6,6 +6,7 @@ import { feedDataListState, selectedFeedIndexState } from "recoil/mainAtom";
 import { fetch } from "apis/fetch";
 import { useCookies } from "react-cookie";
 import { boardCommentListState, commentPageState } from "recoil/boardAtom";
+import { dialogState } from "recoil/dialogAtom";
 
 //component
 import Div from "layout/Div";
@@ -28,7 +29,7 @@ const MainContainer = styled(Div)`
 
 const BoardInfoContainer = () => {
   //cookie
-  const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(["token", "loginId"]);
   const header = { Authorization: cookies.token };
 
   //state
@@ -39,6 +40,7 @@ const BoardInfoContainer = () => {
   const index = useRecoilValue(selectedFeedIndexState);
   const setCommentList = useSetRecoilState(boardCommentListState);
   const setPage = useSetRecoilState(commentPageState);
+  const [dialog, setDialog] = useRecoilState(dialogState);
 
   //event
   const onChangeEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +52,15 @@ const BoardInfoContainer = () => {
     switch (id) {
       case "upload":
         await postAfterSet();
+        return;
+      case "more":
+        if (feedDataList[index as number].feedLoginId === cookies.loginId) {
+          const copyDialog = [...dialog];
+          copyDialog.push({
+            type: "more",
+          });
+          setDialog(copyDialog);
+        }
         return;
       default:
         return;
@@ -84,7 +95,6 @@ const BoardInfoContainer = () => {
       setPage(1);
       // 전송 후 fetch 설정
       if (afterFetch.data !== undefined) {
-        console.log(afterFetch.data.result);
         setCommentList(afterFetch.data.result.commentList);
       }
       if (feedDataList !== undefined && index !== undefined) {
@@ -107,7 +117,7 @@ const BoardInfoContainer = () => {
   return (
     <MainContainer onClick={onClickEvent}>
       {/* 작성자 프로필 */}
-      <Div flex="row_between" padding="15px" marginRight="10px">
+      <Div flex="row_between" padding="15px">
         <Div flex="row">
           {/* 프로필 사진 */}
           <Icon width="35px" radius="50%" marginRight="10px">
@@ -122,15 +132,17 @@ const BoardInfoContainer = () => {
               fontSize="medium"
               lineHeight="24px"
             >
-              {index !== undefined && feedDataList[index]?.feedLoginId
-                ? feedDataList[index].feedLoginId
+              {index !== undefined && feedDataList !== undefined
+                ? feedDataList[index].feedLoginId !== undefined
+                  ? feedDataList[index].feedLoginId
+                  : ""
                 : ""}
             </H1>
           </Div>
         </Div>
         {/* 더보기 아이콘 */}
         <Icon width="24px">
-          <Img src={more_icon} />
+          <Img src={more_icon} id="more" />
         </Icon>
       </Div>
       {/* 댓글 리스트 */}

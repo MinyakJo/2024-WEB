@@ -2,7 +2,6 @@ import { atom } from "recoil";
 
 //type
 export type dialogType = {
-  isOpen?: boolean;
   type?: string;
   data?: any;
 };

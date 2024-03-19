@@ -57,13 +57,17 @@ const InfoFeedTextComponent = () => {
       <Div flex="row">
         <Text color="900" fontWeight="400" fontSize="small" lineHeight="20px">
           <Name>{`${
-            selectedFeedIndex !== undefined
-              ? feedData[selectedFeedIndex]?.feedLoginId
+            selectedFeedIndex !== undefined && feedData !== undefined
+              ? feedData[selectedFeedIndex]?.feedLoginId !== undefined
+                ? feedData[selectedFeedIndex].feedLoginId
+                : ""
               : ""
           } `}</Name>
           {`${
-            selectedFeedIndex !== undefined
-              ? feedData[selectedFeedIndex].feedText
+            selectedFeedIndex !== undefined && feedData !== undefined
+              ? feedData[selectedFeedIndex]?.feedText !== undefined
+                ? feedData[selectedFeedIndex].feedText
+                : ""
               : ""
           }`}
         </Text>
@@ -76,10 +80,12 @@ const InfoFeedTextComponent = () => {
           lineHeight="18px"
           fontWeight="400"
         >
-          {selectedFeedIndex !== undefined
-            ? createdAtFormat(
-                new Date(feedData[selectedFeedIndex].updatedAt as string)
-              )
+          {selectedFeedIndex !== undefined && feedData !== undefined
+            ? feedData[selectedFeedIndex]?.updatedAt !== undefined
+              ? createdAtFormat(
+                  new Date(feedData[selectedFeedIndex].updatedAt as string)
+                )
+              : ""
             : ""}
         </P>
       </Div>

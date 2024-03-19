@@ -77,7 +77,15 @@ const MainContainer = () => {
     const scroll = (e.target as HTMLElement).scrollTop + scrollHeight; // 현재 스크롤 위치
     const mainHeight = (e.target as HTMLElement).scrollHeight; //진짜 스크롤 높이
 
-    infiniteScroll({ scrollHeight, scroll, mainHeight, data, page, setPage });
+    infiniteScroll({
+      scrollHeight,
+      scroll,
+      mainHeight,
+      lastPage: data.result.lastPage,
+      page,
+      setPage,
+      loadHeight: 800,
+    });
   }, 100);
   return (
     <Main

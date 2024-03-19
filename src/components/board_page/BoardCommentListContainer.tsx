@@ -30,6 +30,7 @@ const BoardCommentListContainer = () => {
 
   //state
   const [isLoading, setIsLoading] = useState(false);
+  const [lastPage, setLastPage] = useState(1);
 
   //recoil
   const [commentList, setCommentList] = useRecoilState(boardCommentListState);
@@ -44,13 +45,26 @@ const BoardCommentListContainer = () => {
     if (index !== undefined && feedDataList !== undefined) {
       const fetchData = await fetch({
         method: "GET",
-        url: `/feeds/${feedDataList[index].id}/comments?size=3&page=${page}`,
+        url: `/feeds/${feedDataList[index].id}/comments?size=10&page=${page}`,
         headers: header,
       });
 
       if (fetchData.data.result !== undefined) {
-        setCommentList(fetchData.data.result.commentList);
-        setIsLoading(false);
+        //처음이면 바로 set
+        if (commentList === undefined) {
+          setCommentList(fetchData.data.result.commentList);
+          setLastPage(fetchData.data.result.lastPage);
+          setIsLoading(false);
+        } else {
+          //복사후 병합
+          const copyCommentList = [...commentList];
+
+          setCommentList(
+            copyCommentList.concat(fetchData.data.result.commentList)
+          );
+          setLastPage(fetchData.data.result.lastPage);
+          setIsLoading(false);
+        }
       }
     }
   };
@@ -69,12 +83,12 @@ const BoardCommentListContainer = () => {
       scrollHeight,
       scroll,
       mainHeight,
-      data: commentList,
+      lastPage,
       page,
       setPage,
+      loadHeight: 10,
     });
-  }, 100);
-  console.log(commentList);
+  });
 
   return (
     <CommentContainer
@@ -82,27 +96,26 @@ const BoardCommentListContainer = () => {
       padding="0px 15px"
       onScroll={onScrollEvent}
     >
-      {!isLoading ? (
-        <Div paddingTop="15px">
-          <Div marginBottom="30px">
-            {index !== undefined && feedDataList !== undefined && (
-              <BoardTextComponent id={feedDataList[index].feedLoginId}>
-                {feedDataList[index].feedText}
-              </BoardTextComponent>
-            )}
-          </Div>
-          {commentList &&
-            commentList.map((e, i) => (
-              <BoardTextComponent
-                key={`board_comment_${i}`}
-                id={e?.writeUserLoginId}
-              >
-                {e?.commentText}
-              </BoardTextComponent>
-            ))}
+      <Div paddingTop="15px">
+        <Div marginBottom="30px">
+          {index !== undefined && feedDataList !== undefined && (
+            <BoardTextComponent id={feedDataList[index].feedLoginId}>
+              {feedDataList[index].feedText}
+            </BoardTextComponent>
+          )}
         </Div>
-      ) : (
-        <Div flex="row_center" height="100%">
+        {commentList &&
+          commentList.map((e, i) => (
+            <BoardTextComponent
+              key={`board_comment_${i}`}
+              id={e?.writeUserLoginId}
+            >
+              {e?.commentText}
+            </BoardTextComponent>
+          ))}
+      </Div>
+      {isLoading && (
+        <Div flex="row_center" height="30px">
           <Loader width="10px" />
         </Div>
       )}

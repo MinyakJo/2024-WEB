@@ -2,8 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import CommonStyle from "components/style";
 import { useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { selectedFeedIndexState } from "recoil/mainAtom";
+import { dialogState } from "recoil/dialogAtom";
+import { useCookies } from "react-cookie";
 
 //component
 import FeedImg from "./FeedImg";
@@ -28,11 +30,15 @@ const FeedComponent = ({
   children: any;
   index: number;
 }) => {
+  //cookie
+  const [cookies] = useCookies(["loginId"]);
+
   //navigate
   const navigate = useNavigate();
 
   //recoil
   const setIndex = useSetRecoilState(selectedFeedIndexState);
+  const [dialog, setDialog] = useRecoilState(dialogState);
 
   const onClickEvent = (e: React.MouseEvent<HTMLElement>) => {
     const id = (e.target as HTMLElement).id;
@@ -42,6 +48,16 @@ const FeedComponent = ({
       case "to":
         navigate(`board?boardId=${children.id}`);
         setIndex(index);
+        return;
+      case "more":
+        if (children.feedLoginId === cookies.loginId) {
+          const copyDialog = [...dialog];
+          copyDialog.push({
+            type: "more",
+          });
+          setDialog(copyDialog);
+          setIndex(index);
+        }
         return;
       default:
         return;

@@ -6,8 +6,8 @@ export const setFileList = async ({
   setPreview,
 }: {
   files: FileList | null;
-  set: any;
-  setPreview?: any;
+  set: any; //setImg 이미지
+  setPreview?: any; //setPreview 미리보기
 }) => {
   if (files !== null) {
     if (files.length > 5) {

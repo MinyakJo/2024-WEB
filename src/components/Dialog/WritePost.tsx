@@ -23,6 +23,7 @@ import InputText from "./write_post/InputText";
 
 //icon
 import back_icon from "../../assets/post_back_icon.svg";
+import { uploadToFirebase } from "utils/uploadToFirebase";
 
 const MainContainer = styled(Div)`
   max-width: 1008px;
@@ -33,7 +34,7 @@ const TitleContainer = styled(Div)`
 
 const WritePost = () => {
   //cookie
-  const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(["token", "loginId"]);
   const header = { Authorization: cookies.token };
 
   //recoil
@@ -46,6 +47,7 @@ const WritePost = () => {
   const resetPreview = useResetRecoilState(boardPreviewListState);
   const resetIndex = useResetRecoilState(nowBoardIndexState);
   const resetText = useResetRecoilState(boardTextState);
+  const reset = useResetRecoilState(dialogState);
 
   //useEffect
   useEffect(() => {
@@ -70,7 +72,7 @@ const WritePost = () => {
         } else if (button === "prev") {
           const copyDialog = [...dialog];
           copyDialog.push({
-            type: "alert",
+            type: "notice",
             isOpen: true,
             data: {
               title: "게시물을 삭제하시겠어요?",
@@ -82,6 +84,7 @@ const WritePost = () => {
         return;
       case "fetch":
         await fetchAfterSet();
+        reset();
         return;
       default:
         return;
@@ -90,16 +93,28 @@ const WritePost = () => {
 
   //fuction
   const fetchAfterSet = async () => {
-    const fetchData = await fetch({
-      method: "POST",
-      url: "/feeds",
-      data: {
-        feedText: text,
-        contentUrls: ["https://picsum.photos/seed/N6Uz8AmrB/1000/1000"],
-      },
-      headers: header,
-    });
-    console.log(fetchData);
+    if (fileList !== undefined) {
+      // firebase에서 url 받아오기
+      const urlList = await uploadToFirebase({
+        id: cookies.loginId,
+        fileList: fileList,
+      });
+
+      //업로드
+      const upload = await fetch({
+        method: "POST",
+        url: "/feeds",
+        data: {
+          feedText: text,
+          contentUrls: urlList,
+        },
+        headers: header,
+      });
+
+      if (upload.data?.result.feedId !== undefined) {
+        alert("업로드 했습니다.");
+      }
+    }
   };
 
   return (

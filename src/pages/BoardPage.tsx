@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useResetRecoilState } from "recoil";
 // import { boardIdState } from "recoil/boardAtom";
 import CommonStyle from "components/style";
 import { useLocation } from "react-router-dom";
 // import QueryString from "qs";
 import BoardInfoContainer from "components/board_page/BoardInfoContainer";
 import { feedDataListState, selectedFeedIndexState } from "recoil/mainAtom";
+import { boardCommentListState, commentPageState } from "recoil/boardAtom";
 
 //component
 import Div from "layout/Div";
@@ -42,6 +43,9 @@ const BoardPage = () => {
   // const [boardId, setBoardId] = useRecoilState(boardIdState);
   const index = useRecoilValue(selectedFeedIndexState);
   const feedDataList = useRecoilValue(feedDataListState);
+  const resetBoardCommentList = useResetRecoilState(boardCommentListState);
+  const resetCommentPage = useResetRecoilState(commentPageState);
+  const resetFeedDataList = useResetRecoilState(feedDataListState);
 
   //useEffect
   useEffect(() => {
@@ -50,7 +54,13 @@ const BoardPage = () => {
       // const id = QueryString.parse(search, { ignoreQueryPrefix: true });
       // setBoardId(Number(id.boardId));
     }
-  }, [search]);
+
+    return () => {
+      resetBoardCommentList();
+      resetCommentPage();
+      resetFeedDataList();
+    };
+  }, [search, resetBoardCommentList, resetCommentPage, resetFeedDataList]);
 
   return (
     <Main>

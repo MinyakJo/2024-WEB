@@ -1,9 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
-import { useRecoilValue, useResetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { dialogState } from "recoil/dialogAtom";
 import CommonStyle from "components/style";
 import WritePost from "./Dialog/WritePost";
+import Notice from "./Dialog/Notice";
+import More from "./Dialog/More";
+import EditPost from "./Dialog/EditPost";
 
 //type
 type MainContainerType = {
@@ -36,8 +39,7 @@ const Dialog = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   //recoil
-  const dialog = useRecoilValue(dialogState);
-  const reset = useResetRecoilState(dialogState);
+  const [dialog, setDialog] = useRecoilState(dialogState);
 
   //useEffect
   useEffect(() => {
@@ -47,7 +49,11 @@ const Dialog = () => {
   //event
   const onClickEvent = (e: React.MouseEvent<HTMLElement>) => {
     const id = (e.target as HTMLElement).id;
-    if (id === "background") reset();
+    if (id === "background" || id === "cancel") {
+      const copyDialog = [...dialog];
+      copyDialog.splice(copyDialog.length - 1, 1);
+      setDialog(copyDialog);
+    }
   };
 
   return (
@@ -62,7 +68,17 @@ const Dialog = () => {
             display={dialog.length > 0 ? "flex" : "none"}
             onClick={onClickEvent}
           >
-            {e?.type === "board" ? <WritePost /> : <></>}
+            {e.type === "board" ? (
+              <WritePost />
+            ) : e.type === "notice" ? (
+              <Notice>{e?.data}</Notice>
+            ) : e.type === "more" ? (
+              <More />
+            ) : e.type === "edit" ? (
+              <EditPost />
+            ) : (
+              <></>
+            )}
           </MainContainer>
         ))}
     </>

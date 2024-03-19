@@ -53,7 +53,7 @@ const FeedImg = ({ children }: { children: any }) => {
           </Div>
           {/* 더보기 */}
           <Icon width="24px">
-            <Img src={more_circle_icon} />
+            <Img src={more_circle_icon} id="more" />
           </Icon>
         </Div>
       </Overlay>

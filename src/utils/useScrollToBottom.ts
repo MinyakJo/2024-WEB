@@ -2,19 +2,20 @@ import { useEffect } from "react";
 
 type propsType = {
   useRef: React.RefObject<HTMLElement>;
-  element?: any;
+  dependency?: any;
+  scroll?: number;
 };
 
-const useScrollToBottom = ({ useRef, element }: propsType) => {
+const useScrollToBottom = ({ useRef, dependency, scroll }: propsType) => {
   useEffect(() => {
     if (useRef.current !== null) {
       useRef.current.scrollTo({
-        top: useRef.current.scrollHeight,
+        top: scroll,
         left: 0,
         behavior: "smooth",
       });
     }
-  }, [useRef, element]);
+  }, [useRef, dependency]);
 };
 
 export default useScrollToBottom;
