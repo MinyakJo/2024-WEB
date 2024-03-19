@@ -13,6 +13,7 @@ const setFontSize = (value: string): string => {
     medium_large: "18px",
     large: "20px",
     extra_large: "24px",
+    xx_large: "30px",
   };
 
   switch (value) {
@@ -23,6 +24,7 @@ const setFontSize = (value: string): string => {
     case "medium_large":
     case "large":
     case "extra_large":
+    case "xx_large":
       return font_size[value];
     default:
       return value;

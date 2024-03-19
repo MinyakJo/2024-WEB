@@ -6,8 +6,8 @@ import { Route, Routes } from "react-router-dom";
 import { isLogin } from "utils/isLogin";
 import { isLogout } from "utils/isLogout";
 import { useMediaQuery } from "react-responsive";
-import { useSetRecoilState } from "recoil";
-import { isMobileState } from "recoil/mainAtom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isMobileState, nowPageNameState } from "recoil/mainAtom";
 
 // ===== Components =====
 
@@ -17,6 +17,8 @@ import SignUpPage from "pages/SignUpPage";
 import HomePage from "pages/HomePage";
 import BoardPage from "pages/BoardPage";
 import Dialog from "components/Dialog";
+import TopBar from "components/top_bar/TopBar";
+import PayPage from "pages/PayPage";
 
 // ===== Code =====
 
@@ -28,6 +30,7 @@ const App = () => {
 
   //recoil
   const setIsMobile = useSetRecoilState(isMobileState);
+  const nowPageName = useRecoilValue(nowPageNameState);
 
   //useEffect
   useEffect(() => {
@@ -38,12 +41,15 @@ const App = () => {
     <Div width="100vw" height="100vh">
       {/* 폰트 */}
       <GlobalFonts />
+      {/* 상단바 */}
+      {(nowPageName === "home" || nowPageName === "pay") && <TopBar />}
       {/* 페이지 라우터 */}
       <Routes>
         <Route path="/" element={isLogin(<HomePage />)} />
         <Route path="/login" element={isLogout(<LoginPage />)} />
         <Route path="/sign-up" element={isLogout(<SignUpPage />)} />
         <Route path="/board" element={isLogin(<BoardPage />)} />
+        <Route path="/pay" element={isLogin(<PayPage />)} />
       </Routes>
       {/* 다이얼로그 */}
       <Dialog />

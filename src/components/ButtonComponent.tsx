@@ -46,7 +46,7 @@ const ButtonComponent = ({
         fontWeight={fontWeight ? fontWeight : "600"}
         lineHeight={lineHeight ? lineHeight : "18px"}
         letter={letter}
-        color={color ? color : "black"}
+        color={color ? color : "900"}
         cursor={cursor}
       >
         {children}

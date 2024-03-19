@@ -11,7 +11,6 @@ import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 
 //component
 import Div from "layout/Div";
-import TopBar from "components/top_bar/TopBar";
 import MainContainer from "components/home_page/MainContainer";
 import MobileBar from "components/mobile_bar/MobileBar";
 
@@ -44,7 +43,6 @@ const HomePage = () => {
 
   return (
     <Div height="100%" backgroundColor="50">
-      <TopBar />
       <MainContainer />
       {isMobile && <MobileBar />}
     </Div>

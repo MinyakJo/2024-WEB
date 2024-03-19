@@ -1,5 +1,5 @@
 import { ref } from "firebase/storage";
-import { fStorage } from "apis/firebase";
+import { fStorage } from "config/firebase";
 import { v4 as uuidv4 } from "uuid";
 import { uploadBytes } from "firebase/storage";
 import { getDownloadURL } from "firebase/storage";

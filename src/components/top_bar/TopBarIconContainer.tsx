@@ -4,6 +4,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { nowPageNameState } from "recoil/mainAtom";
 import { useNavigate } from "react-router-dom";
 import { dialogState } from "recoil/dialogAtom";
+import { useCookies } from "react-cookie";
 
 //component
 import Div from "layout/Div";
@@ -39,11 +40,15 @@ const ProfileButton = styled(Button)`
 `;
 
 const TopBarIconContainer = () => {
+  //cookie
+  const [, , removeCookies] = useCookies(["token", "loginId", "id"]);
+
   //navigate
   const navigate = useNavigate();
 
   //state
   const [modalIsOpen, setModalIsOpen] = useState(false);
+
   //recoil
   const nowPage = useRecoilValue(nowPageNameState);
   const [dialog, setDialog] = useRecoilState(dialogState);
@@ -70,6 +75,11 @@ const TopBarIconContainer = () => {
         return;
       case "profile":
         setModalIsOpen(!modalIsOpen);
+        return;
+      case "logout":
+        removeCookies("token");
+        removeCookies("loginId");
+        removeCookies("id");
         return;
       default:
         return;

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { pwIsHideState, loginCheckState } from "recoil/loginAtom";
+import { nowPageNameState } from "recoil/mainAtom";
 
 //component
 import Div from "layout/Div";
@@ -42,6 +43,12 @@ const LoginPage = () => {
   //비밀번호 숨김 여부 set, reset
   const setPwIsHide = useSetRecoilState(pwIsHideState);
   const resetPwIsHide = useResetRecoilState(pwIsHideState);
+  const setNowPageName = useSetRecoilState(nowPageNameState);
+
+  //useEffect
+  useEffect(() => {
+    setNowPageName("login");
+  }, []);
 
   //event
   //click 이벤트

@@ -7,6 +7,7 @@ import WritePost from "./Dialog/WritePost";
 import Notice from "./Dialog/Notice";
 import More from "./Dialog/More";
 import EditPost from "./Dialog/EditPost";
+import Alert from "./Dialog/Alert";
 
 //type
 type MainContainerType = {
@@ -76,6 +77,8 @@ const Dialog = () => {
               <More />
             ) : e.type === "edit" ? (
               <EditPost />
+            ) : e.type === "alert" ? (
+              <Alert>{e?.data}</Alert>
             ) : (
               <></>
             )}

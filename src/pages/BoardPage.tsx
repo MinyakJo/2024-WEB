@@ -1,12 +1,16 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useRecoilValue, useResetRecoilState } from "recoil";
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 // import { boardIdState } from "recoil/boardAtom";
 import CommonStyle from "components/style";
 import { useLocation } from "react-router-dom";
 // import QueryString from "qs";
 import BoardInfoContainer from "components/board_page/BoardInfoContainer";
-import { feedDataListState, selectedFeedIndexState } from "recoil/mainAtom";
+import {
+  feedDataListState,
+  nowPageNameState,
+  selectedFeedIndexState,
+} from "recoil/mainAtom";
 import { boardCommentListState, commentPageState } from "recoil/boardAtom";
 
 //component
@@ -43,12 +47,14 @@ const BoardPage = () => {
   // const [boardId, setBoardId] = useRecoilState(boardIdState);
   const index = useRecoilValue(selectedFeedIndexState);
   const feedDataList = useRecoilValue(feedDataListState);
+  const setNowPageName = useSetRecoilState(nowPageNameState);
   const resetBoardCommentList = useResetRecoilState(boardCommentListState);
   const resetCommentPage = useResetRecoilState(commentPageState);
   const resetFeedDataList = useResetRecoilState(feedDataListState);
 
   //useEffect
   useEffect(() => {
+    setNowPageName("board");
     if (search !== undefined || search !== "") {
       //쿼리 스트링을 읽어와서 recoil 등록
       // const id = QueryString.parse(search, { ignoreQueryPrefix: true });
