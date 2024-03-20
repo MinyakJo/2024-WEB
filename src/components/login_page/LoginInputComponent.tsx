@@ -6,7 +6,6 @@ import {
   loginInputState,
   pwIsHideState,
 } from "recoil/loginAtom";
-import { debounce } from "lodash";
 import { useCookies } from "react-cookie";
 
 //component
@@ -36,7 +35,7 @@ const LoginInputComponent = () => {
 
   //event
   //input 이벤트
-  const onChangeEvent = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
     const copyInputs = {
       ...inputs,
       [e.target.id]: e.target.value,
@@ -54,7 +53,7 @@ const LoginInputComponent = () => {
     } else {
       setLoginCheck(false);
     }
-  }, 50);
+  };
   //enter 이벤트
   const onKeyUpEvent = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     //아이디가 1자이상, 비민번호 6자 이상일때

@@ -8,6 +8,7 @@ import {
 import { fetch } from "apis/fetch";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { REDIRECT_URL } from "apis/kakao";
 
 //component
 import Div from "layout/Div";
@@ -59,6 +60,8 @@ const LoginButtonComponent = () => {
         }
         return;
       case "kakao":
+        // oauth 요청 URL
+        window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URL}&response_type=code`;
         return;
       default:
         return;
@@ -94,7 +97,7 @@ const LoginButtonComponent = () => {
           backgroundColor="kakao"
         >
           <Icon width="20px" marginRight="2px">
-            <Img src={kakao_icon} />
+            <Img src={kakao_icon} id="kakao" />
           </Icon>
           카카오 로그인
         </ButtonComponent>
