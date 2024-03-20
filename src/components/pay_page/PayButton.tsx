@@ -21,7 +21,7 @@ const PayButton = () => {
       IMP.init("imp81805325");
 
       setData({
-        pg: "html5_inicis.INIBillTst", //결제사
+        pg: "kcp.AO09C", //결제사
         pay_method: "card", //결제 수단
         merchant_uid: `mid_${new Date().getTime()}`, //주문번호
         name: "구독", //주문명
@@ -45,7 +45,6 @@ const PayButton = () => {
 
   const callback = (res: RequestPayResponse) => {
     const { success /* paid_amount, imp_uid */ } = res;
-    console.log(success);
     //성공
     if (success) {
       // 백엔드에서 검증 하는 api가 없음
