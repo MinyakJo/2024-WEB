@@ -9,7 +9,6 @@ import {
   signPwIsHideState,
   telOrEmailCheckState,
 } from "recoil/signAtom";
-import { debounce } from "lodash";
 
 //component
 import Div from "layout/Div";
@@ -42,7 +41,7 @@ const SignUpInputComponent = () => {
   const setHiddenAlert = useSetRecoilState(signHiddenAlertState);
 
   //event
-  const onChangeEvent = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
     //삽입된 인덱스 분리
     const index = Number(e.target.id.split("_")[1]);
     const value = e.target.value;
@@ -119,7 +118,7 @@ const SignUpInputComponent = () => {
       default:
         break;
     }
-  }, 200);
+  };
   return (
     <Div flex="column_center" marginTop="10px">
       {inputs &&
@@ -134,7 +133,7 @@ const SignUpInputComponent = () => {
               onChange={onChangeEvent}
               placeholder={
                 i === 0
-                  ? "전화번호, 사용자 이름 또는 이메일"
+                  ? "전화번호"
                   : i === 1
                   ? "성명"
                   : i === 2
