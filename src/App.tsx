@@ -19,6 +19,8 @@ import BoardPage from "pages/BoardPage";
 import Dialog from "components/Dialog";
 import TopBar from "components/top_bar/TopBar";
 import PayPage from "pages/PayPage";
+import PayDonePage from "pages/PayDonePage";
+import AuthPage from "pages/AuthPage";
 
 // ===== Code =====
 
@@ -50,6 +52,8 @@ const App = () => {
         <Route path="/sign-up" element={isLogout(<SignUpPage />)} />
         <Route path="/board" element={isLogin(<BoardPage />)} />
         <Route path="/pay" element={isLogin(<PayPage />)} />
+        <Route path="/pay/done" element={isLogin(<PayDonePage />)} />
+        <Route path="/login/kakao" element={isLogout(<AuthPage />)} />
       </Routes>
       {/* 다이얼로그 */}
       <Dialog />
