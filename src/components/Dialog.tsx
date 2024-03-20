@@ -3,11 +3,11 @@ import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { dialogState } from "recoil/dialogAtom";
 import CommonStyle from "components/style";
-import WritePost from "./Dialog/WritePost";
-import Notice from "./Dialog/Notice";
-import More from "./Dialog/More";
-import EditPost from "./Dialog/EditPost";
-import Alert from "./Dialog/Alert";
+import WritePost from "./dialog/WritePost";
+import Notice from "./dialog/Notice";
+import More from "./dialog/More";
+import EditPost from "./dialog/EditPost";
+import Alert from "./dialog/Alert";
 
 //type
 type MainContainerType = {
