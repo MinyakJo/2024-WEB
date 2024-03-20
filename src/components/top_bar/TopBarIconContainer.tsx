@@ -80,6 +80,7 @@ const TopBarIconContainer = () => {
         removeCookies("token");
         removeCookies("loginId");
         removeCookies("id");
+        navigate("/login", { replace: true });
         return;
       default:
         return;
