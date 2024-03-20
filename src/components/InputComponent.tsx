@@ -106,7 +106,7 @@ const InputComponent = ({
         maxLength={maxSize}
         onChange={onChange}
         onKeyUp={onKeyUp}
-        defaultValue={value}
+        value={value}
         autoComplete="off"
       />
       {/* 비밀번호 표시, 숨기기 버튼 */}
