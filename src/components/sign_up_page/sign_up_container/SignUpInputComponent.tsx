@@ -84,7 +84,7 @@ const SignUpInputComponent = () => {
         if (value.length > 0) setNameCheck(true);
         else setNameCheck(false);
         break;
-      case 2: //사용자 이름
+      case 2: //사용자 이름(닉네임)
         const nickNameReg = /^[a-z0-9\_\.]+$/;
 
         //사용자 이름 체크 복사
@@ -133,7 +133,7 @@ const SignUpInputComponent = () => {
               onChange={onChangeEvent}
               placeholder={
                 i === 0
-                  ? "전화번호"
+                  ? "전화번호(- 없이)"
                   : i === 1
                   ? "성명"
                   : i === 2
