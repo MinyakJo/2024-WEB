@@ -12,6 +12,7 @@ import {
 import { fetch } from "apis/fetch";
 import { dateFormat } from "utils/dataFormat";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 //component
 import Div from "layout/Div";
@@ -50,6 +51,9 @@ const CheckBox = styled(Icon)`
 `;
 
 const PolicyCheckListComponent = () => {
+  //cookie
+  const [cookies, , removeCookies] = useCookies(["kakao_token"]);
+
   //navigate
   const navigate = useNavigate();
 
@@ -92,7 +96,7 @@ const PolicyCheckListComponent = () => {
   }, []);
 
   //event
-  const onClickEvent = async (e: React.MouseEvent<HTMLDivElement>) => {
+  const onClickEvent = (e: React.MouseEvent<HTMLDivElement>) => {
     const id = (e.target as HTMLElement).id;
     const type = id.split("_")[0];
     const index = Number(id.split("_")[1]);
@@ -112,10 +116,39 @@ const PolicyCheckListComponent = () => {
         }
         return;
       case "sign":
-        const fetchData = await fetch({
-          method: "POST",
-          url: "/auth/sign-up",
-          data: {
+        signUpPost();
+        return;
+      case "back":
+        setIsPolicyPage(false);
+        return;
+      default:
+        return;
+    }
+  };
+
+  const signUpPost = async () => {
+    const fetchData = await fetch({
+      method: "POST",
+      url: !cookies.kakao_token
+        ? "/auth/sign-up"
+        : "/auth/kakao/sign-up-by-token",
+      data: !cookies.kakao_token
+        ? {
+            loginId: inputs[2],
+            password: inputs[3],
+            realName: inputs[1],
+            phone: inputs[0]
+              .replace(/[^0-9]/g, "")
+              .replace(/^(\d{3})(\d{4})(\d{4})$/, `$1-$2-$3`),
+            birthDate: `${dateFormat(
+              birthDate.year,
+              birthDate.month,
+              birthDate.day,
+              "-"
+            )}`,
+          }
+        : {
+            accessToken: cookies.kakao_token,
             loginId: inputs[2],
             password: inputs[3],
             realName: inputs[1],
@@ -129,20 +162,17 @@ const PolicyCheckListComponent = () => {
               "-"
             )}`,
           },
-        });
-
-        if (fetchData?.data) {
-          if (fetchData.data.statusCode === 201)
-            navigate("/login", { replace: true });
-          else alert(fetchData.data.message[0]);
-        }
-        return;
-      case "back":
-        setIsPolicyPage(false);
-        return;
-      default:
-        return;
-    }
+    });
+    if (fetchData?.data) {
+      if (
+        fetchData.data.statusCode === 201 ||
+        fetchData.data.statusCode === 200
+      ) {
+        if (cookies.kakao_token) removeCookies("kakao_token");
+        navigate("/login", { replace: true });
+        alert("회원 가입 성공");
+      } else alert(fetchData.data.message[0]);
+    } else alert(fetchData);
   };
 
   return (
