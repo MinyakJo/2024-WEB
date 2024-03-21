@@ -10,8 +10,11 @@ import {
   signPwIsHideState,
   telOrEmailCheckState,
 } from "recoil/signAtom";
+import { nowPageNameState } from "recoil/mainAtom";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useCookies } from "react-cookie";
+import { REDIRECT_URL } from "apis/kakao";
 
 //component
 import Div from "layout/Div";
@@ -26,10 +29,14 @@ export const MainContainer = styled(Div)`
 `;
 
 const SignUpPage = () => {
+  //cookie
+  const [cookies] = useCookies(["kakao_token"]);
+
   //navigate
   const navigate = useNavigate();
 
   //recoil
+  const setNowPageName = useSetRecoilState(nowPageNameState);
   //비밀번호 표시 숨기기
   const setSignPwIsHide = useSetRecoilState(signPwIsHideState);
   //생년월일 페이지 인지 아닌지
@@ -61,6 +68,14 @@ const SignUpPage = () => {
       case "showPw":
         setSignPwIsHide(true);
         return;
+      case "kakao":
+        if (cookies.kakao_token) {
+          alert("이미 카카오 정보가 등록된 상태입니다.");
+          return;
+        }
+
+        window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URL}&response_type=code`;
+        return;
       default:
         return;
     }
@@ -68,6 +83,8 @@ const SignUpPage = () => {
 
   //useEffect
   useEffect(() => {
+    setNowPageName("sign");
+
     return () => {
       resetSignPwIsHide();
       resetTelOrEmailCheck();
