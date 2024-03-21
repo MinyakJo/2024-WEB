@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { pwIsHideState, loginCheckState } from "recoil/loginAtom";
 import { nowPageNameState } from "recoil/mainAtom";
+import { useCookies } from "react-cookie";
 
 //component
 import Div from "layout/Div";
@@ -34,6 +35,8 @@ const ImgContainer = styled(Div)<ImgContainerType>`
 `;
 
 const LoginPage = () => {
+  //cookie
+  const [cookies, , removeCookies] = useCookies(["kakao_token"]);
   //navigate
   const navigate = useNavigate();
 
@@ -48,7 +51,8 @@ const LoginPage = () => {
   //useEffect
   useEffect(() => {
     setNowPageName("login");
-  }, []);
+    if (cookies.kakao_token) removeCookies("kakao_token");
+  }, [cookies.kakao_token]);
 
   //event
   //click 이벤트
