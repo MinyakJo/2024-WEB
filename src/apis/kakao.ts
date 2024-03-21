@@ -19,19 +19,24 @@ export const getAccessTokenByKakao = async (code: string) => {
 
     return result.data.access_token;
   } catch (err) {
-    console.log(err);
+    alert(err);
   }
   return undefined;
 };
 
 export const getUserInfoByKakao = async (getAccessTokenByKakao: string) => {
-  const result = await axios({
-    method: "get",
-    url: "https://kapi.kakao.com/v1/oidc/userinfo",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-      Authorization: `Bearer ${getAccessTokenByKakao}`,
-    },
-  });
-  return result.data;
+  try {
+    const result = await axios({
+      method: "get",
+      url: "https://kapi.kakao.com/v1/oidc/userinfo",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+        Authorization: `Bearer ${getAccessTokenByKakao}`,
+      },
+    });
+    return result.data;
+  } catch (err) {
+    alert(err);
+  }
+  return undefined;
 };
