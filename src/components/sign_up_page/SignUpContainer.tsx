@@ -50,9 +50,10 @@ const SignUpContainer = () => {
             color="brown"
             fontSize="medium"
             backgroundColor="kakao"
+            id="kakao"
           >
-            <Icon width="20px" marginRight="2px">
-              <Img src={kakao_icon} />
+            <Icon width="20px" marginRight="2px" id="kakao">
+              <Img src={kakao_icon} id="kakao" />
             </Icon>
             카카오 로그인
           </ButtonComponent>
